@@ -32,6 +32,7 @@ g.add((EX.RecomendacionIngresante, RDFS.subClassOf, EX.Recomendacion))
 g.add((EX.RecomendacionIntermedio, RDFS.subClassOf, EX.Recomendacion))
 g.add((EX.RecomendacionAvanzado, RDFS.subClassOf, EX.Recomendacion))
 
+
 # ================================================================
 # 2) DEFINIR PROPIEDADES
 # ================================================================
@@ -79,7 +80,6 @@ for prop, (dom, ran) in data_props.items():
     g.add((EX[prop], RDF.type, OWL.DatatypeProperty))
     g.add((EX[prop], RDFS.domain, EX[dom]))
     g.add((EX[prop], RDFS.range, ran))
-
 # ================================================================
 # 3) CREAR INDIVIDUOS - MATERIAS (AMPLIADO)
 # ================================================================
@@ -92,35 +92,82 @@ materias_base = {
 
 # Materias del plan completo
 materias = {
-    # PRIMER AÑO
-    "MAT_1": ("Introduccion a la Programacion", 90, "MOD_Presencial", 1),
-    "MAT_3": ("Organizacion de Computadoras", 90, "MOD_Presencial", 1),
-    
-    # SEGUNDO AÑO
-    "MAT_5": ("Metodologia de la Programacion", 90, "MOD_Hibrida", 2),
-    "MAT_6": ("Analisis Matematico II", 90, "MOD_Presencial", 2),
-    "MAT_7": ("Fisica Mecanica", 90, "MOD_Presencial", 2),
-    "MAT_8": ("Estructura de Datos", 90, "MOD_Presencial", 2),
-    "MAT_9": ("Matematica Discreta", 90, "MOD_Hibrida", 2),
-    
-    # TERCER AÑO
-    "MAT_10": ("Teoria de la Informacion y la Comunicacion", 60, "MOD_Virtual", 3),
-    "MAT_11": ("Desarrollo Sistematico de Programas", 90, "MOD_Presencial", 3),
-    "MAT_12": ("Algoritmos y Complejidad", 90, "MOD_Presencial", 3),
-    "MAT_13": ("Bases de Datos", 90, "MOD_Hibrida", 3),
-    "MAT_14": ("Sistemas Operativos", 90, "MOD_Presencial", 3),
-    
-    # CUARTO AÑO
-    "MAT_15": ("Ingenieria de Software", 90, "MOD_Hibrida", 4),
-    "MAT_16": ("Redes de Computadoras", 90, "MOD_Presencial", 4),
-    "MAT_17": ("Inteligencia Artificial", 90, "MOD_Virtual", 4),
-    "MAT_18": ("Compiladores", 90, "MOD_Presencial", 4),
-    
-    # QUINTO AÑO
-    "MAT_19": ("Arquitectura de Computadoras", 60, "MOD_Virtual", 5),
-    "MAT_20": ("Seguridad Informatica", 90, "MOD_Hibrida", 5),
-}
+    # --- PRIMER AÑO (todas MOD_Hibrida) ---
+    "MAT_1": ("Introducción a la Programación", 90, "MOD_Hibrida", 1),
+    "MAT_2": ("Álgebra Lineal", 90, "MOD_Hibrida", 1),
+    "MAT_3": ("Organización de Computadoras", 90, "MOD_Hibrida", 1),
+    "MAT_4": ("Análisis Matemático I", 90, "MOD_Hibrida", 1),
+    "MAT_5": ("Metodología de la Programación", 90, "MOD_Hibrida", 1),
+    "MAT_6": ("Análisis Matemático II", 90, "MOD_Hibrida", 1),
+    "MAT_7": ("Física Mecánica", 90, "MOD_Hibrida", 1),
+    "MAT_8": ("Estructura de Datos", 90, "MOD_Hibrida", 1),
 
+    # --- SEGUNDO AÑO ---
+    # Todas MOD_Hibrida excepto:
+    # - Electricidad y Magnetismo -> MOD_Presencial
+    # - Programación Concurrente -> MOD_Virtual
+    # - Cálculo Numérico -> MOD_Virtual
+    "MAT_9":  ("Matemática Discreta", 90, "MOD_Hibrida", 2),
+    "MAT_10": ("Teoría de la Información y la Comunicación", 60, "MOD_Hibrida", 2),
+    "MAT_11": ("Desarrollo Sistemático de Programas", 90, "MOD_Hibrida", 2),
+    "MAT_12": ("Probabilidades y Estadística", 90, "MOD_Hibrida", 2),
+    "MAT_13": ("Electricidad y Magnetismo", 90, "MOD_Presencial", 2),
+    "MAT_14": ("Bases de Datos", 90, "MOD_Hibrida", 2),
+    "MAT_15": ("Programación Concurrente", 90, "MOD_Virtual", 2),
+    "MAT_16": ("Cálculo Numérico", 90, "MOD_Virtual", 2),
+
+    # --- TERCER AÑO ---
+    # Todas MOD_Hibrida menos:
+    # - Lógica Computacional -> MOD_Presencial
+    # - Organización Empresarial y Modelos de Negocios -> MOD_Virtual
+    # - Sistemas Operativos I y II -> MOD_Virtual
+    # - Métodos de Simulación -> MOD_Virtual
+    "MAT_17": ("Lógica Computacional", 60, "MOD_Presencial", 3),
+    "MAT_18": ("Sistemas Operativos I", 90, "MOD_Virtual", 3),
+    "MAT_19": ("Organización Empresarial y Modelos de Negocios", 90, "MOD_Virtual", 3),
+    "MAT_20": ("Modelado Orientado a Objetos", 90, "MOD_Hibrida", 3),
+    "MAT_21": ("Cursos Optativos (90h)", 90, "MOD_Hibrida", 3),
+    "MAT_22": ("Teoría de Autómatas, Lenguajes y Computación", 90, "MOD_Hibrida", 3),
+    "MAT_23": ("Sistemas Operativos II", 90, "MOD_Virtual", 3),
+    "MAT_24": ("Métodos de Simulación", 60, "MOD_Virtual", 3),
+
+    # --- CUARTO AÑO ---
+    # En general Híbridas, excepto:
+    # - Calidad del Software y Testing -> MOD_Presencial
+    # - Arquitectura de Redes -> MOD_Presencial
+    # - Arquitectura de Computadoras Paralelas -> MOD_Presencial
+    # - Sistemas de Información -> MOD_Presencial
+    # - Seguridad y Auditoría Informática -> MOD_Presencial
+    "MAT_25": ("Formulación y Evaluación de Proyectos Informáticos y Emprendedorismo Digital", 90, "MOD_Hibrida", 4),
+    "MAT_26": ("Calidad del Software y Testing", 90, "MOD_Presencial", 4),
+    "MAT_27": ("Arquitectura de Redes", 90, "MOD_Presencial", 4),
+    "MAT_28": ("Ingeniería del Conocimiento", 90, "MOD_Hibrida", 4),
+    "MAT_29": ("Arquitectura de Computadoras Paralelas", 60, "MOD_Presencial", 4),
+    "MAT_30": ("Sistemas de Información", 90, "MOD_Presencial", 4),
+    "MAT_31": ("Cursos Optativos (180h)", 180, "MOD_Hibrida", 4),
+    "MAT_32": ("Seguridad y Auditoría Informática", 75, "MOD_Presencial", 4),
+
+    # --- QUINTO AÑO (modalidad no especificada aún) ---
+    "MAT_33": ("Ingeniería de Software I", 60, "MOD_Presencial", 5),
+    "MAT_34": ("Sistemas Inteligentes", 90, "MOD_Hibrida", 5),
+    "MAT_35": ("Legislación, Ética y Ejercicio Profesional", 75, "MOD_Presencial", 5),
+    "MAT_36": ("Ingeniería de Software II", 60, "MOD_Presencial", 5),
+    "MAT_37_PPS": ("Práctica Profesional Supervisada", 200, "MOD_Presencial", 5),
+    "MAT_38_TF": ("Trabajo Final", 200, "MOD_Presencial", 5),
+
+    # --- OPTATIVAS (modalidad no especificada aún) ---
+    "OPT_37": ("Compiladores", 90, "MOD_Hibrida", 3),
+    "OPT_38": ("Aplicaciones de Bases de Datos I", 90, "MOD_Virtual", 3),
+    "OPT_39": ("Aplicaciones de Bases de Datos II", 90, "MOD_Virtual", 3),
+    "OPT_40": ("Introducción al Procesamiento Digital de Imágenes", 90, "MOD_Presencial", 3),
+    "OPT_41": ("Inteligencia Artificial", 90, "MOD_Hibrida", 3),
+    "OPT_42": ("Recuperación Avanzada de la Información", 90, "MOD_Virtual", 3),
+    "OPT_43": ("Desarrollo y Arquitecturas Avanzadas de Software", 90, "MOD_Hibrida", 3),
+    "OPT_44": ("Modelado y Proceso de Negocios", 90, "MOD_Hibrida", 3),
+    "OPT_45": ("Taller de Formación Profesional", 60, "MOD_Hibrida", 3),
+    "OPT_46": ("Taller de Metodología de la Investigación Científica", 60, "MOD_Hibrida", 3),
+    "OPT_47": ("Gestión Ambiental", 60, "MOD_Hibrida", 3)
+}
 # Crear materias base
 for id, (nombre, carga, modalidad, anio) in materias_base.items():
     g.add((EX[id], RDF.type, EX.MateriaBase))
@@ -354,26 +401,73 @@ agregar_recomendaciones(recomendaciones_avan, EX.RecomendacionAvanzado)
 g.add((EX.MAT_1, EX.esCorrelativaDe, EX.MAT_5))  # Intro Prog → Metodologia
 g.add((EX.MAT_1, EX.esCorrelativaDe, EX.MAT_8))  # Intro Prog → Estructura Datos
 g.add((EX.MAT_2, EX.esCorrelativaDe, EX.MAT_9))  # Algebra → Matematica Discreta
+g.add((EX.MAT_2, EX.esCorrelativaDe, EX.MAT_7))  # Algebra → Fisica
 g.add((EX.MAT_4, EX.esCorrelativaDe, EX.MAT_6))  # Análisis I → Análisis II
 g.add((EX.MAT_4, EX.esCorrelativaDe, EX.MAT_7))  # Análisis I → Física
 
 # Segundo año → Tercer año
+g.add((EX.MAT_3, EX.esCorrelativaDe, EX.MAT_10))  # Organizacion de computadoras → TIC
 g.add((EX.MAT_5, EX.esCorrelativaDe, EX.MAT_11))  # Metodologia → Desarrollo Sistematico
-g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_12))  # Estructura Datos → Algoritmos
-g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_13))  # Estructura Datos → Bases de Datos
-g.add((EX.MAT_3, EX.esCorrelativaDe, EX.MAT_14))  # Org. Computadoras → Sistemas Operativos
-g.add((EX.MAT_9, EX.esCorrelativaDe, EX.MAT_12))  # Mat. Discreta → Algoritmos
+g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_11))  # Estructura de Datos → Desarrollo Sistematico
+g.add((EX.MAT_2, EX.esCorrelativaDe, EX.MAT_12))  # Algebra Lineal → Probabilidad y estadistica
+g.add((EX.MAT_6, EX.esCorrelativaDe, EX.MAT_12))  # Analisis II → Probabilidad y estadistica
+g.add((EX.MAT_7, EX.esCorrelativaDe, EX.MAT_13))  # Fisica Mecanica → Electricidad y Magenetismo
+g.add((EX.MAT_5, EX.esCorrelativaDe, EX.MAT_14))  # Metodologia → Base de Datos
+g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_14))  # Estructura Datos → Base de Datos
+g.add((EX.MAT_5, EX.esCorrelativaDe, EX.MAT_15))  # Metodologia → Programacion concurrente
+g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_15))  # Estructura de Datos → Algoritmos
+g.add((EX.MAT_6, EX.esCorrelativaDe, EX.MAT_16))  # Analisis Matematica II → Calculo Numerico
+
 
 # Tercer año → Cuarto año
-g.add((EX.MAT_11, EX.esCorrelativaDe, EX.MAT_15))  # Desarrollo → Ing. Software
-g.add((EX.MAT_14, EX.esCorrelativaDe, EX.MAT_16))  # Sist. Operativos → Redes
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_17))  # Algoritmos → IA
-g.add((EX.MAT_11, EX.esCorrelativaDe, EX.MAT_18))  # Desarrollo → Compiladores
+g.add((EX.MAT_2, EX.esCorrelativaDe, EX.MAT_17))  # Algebra Lineal → Logica Computacional
+g.add((EX.MAT_3, EX.esCorrelativaDe, EX.MAT_18))  # Organizacion de computadoras → Sistema Operativos
+g.add((EX.MAT_5, EX.esCorrelativaDe, EX.MAT_18))  # Metodologia → Sistema Operativos
+g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_18))  # Estructura de Datos → Sistema Operativos
+g.add((EX.MAT_5, EX.esCorrelativaDe, EX.MAT_19))  # Metodologia → OEM
+g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_19))  # Estructura de Datos → OEM
+g.add((EX.MAT_15, EX.esCorrelativaDe, EX.MAT_20))  # Programacion Concurrente → Modelado Orientado A objetos
+g.add((EX.MAT_8, EX.esCorrelativaDe, EX.MAT_22))  # Estructura de Datos → TALC
+g.add((EX.MAT_17, EX.esCorrelativaDe, EX.MAT_22))  # Logica Computacional → TALC
+g.add((EX.MAT_18, EX.esCorrelativaDe, EX.MAT_23))  # Sistema Operativos I → Sistema Operativos II
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_24))  # Probabilidad y Estadistica → Metodos de Simulacion
+g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_24))  # Calculo Numerico → Metodos de Simulacion
 
 # Cuarto año → Quinto año
-g.add((EX.MAT_14, EX.esCorrelativaDe, EX.MAT_19))  # Sist. Operativos → Arquitectura
-g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_20))  # Redes → Seguridad
+g.add((EX.MAT_19, EX.esCorrelativaDe, EX.MAT_25))  # OEM → FEPIED
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_26))  # Modelado Orientado a Objetos → Calidad del SW Y Test
+g.add((EX.MAT_23, EX.esCorrelativaDe, EX.MAT_27))  # Sistema Operativos II  → Arquitectura de Redes 
+g.add((EX.MAT_17, EX.esCorrelativaDe, EX.MAT_28))  # Logica Computacional → INCO
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_28))  # MOO → INCO
+#g.add((EX.MAT_21, EX.esCorrelativaDe, EX.MAT_28))  # Estructura de Datos → INCO
+g.add((EX.MAT_23, EX.esCorrelativaDe, EX.MAT_29))  # Sistema Operativos II → Arquitectura Paralelas
+g.add((EX.MAT_27, EX.esCorrelativaDe, EX.MAT_29))  # Arquitectura de Redes → Arquitectura Paralelas
+#g.add((EX.MAT_21, EX.esCorrelativaDe, EX.MAT_29))  # Arquitectura de Redes → Arquitectura Paralelas
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_30))  # MOO → Sistema de Informacion
+#g.add((EX.MAT_21, EX.esCorrelativaDe, EX.MAT_30))  # MOO → Sistema de Informacion
+g.add((EX.MAT_23, EX.esCorrelativaDe, EX.MAT_32))  # Sistema Operativos II → Seguridad y Auditoria
 
+#Quinto Año
+
+g.add((EX.MAT_30, EX.esCorrelativaDe, EX.MAT_33))  # Sistema de Informacion → ING. SOFT
+g.add((EX.MAT_9, EX.esCorrelativaDe, EX.MAT_34))  # Matematica Discreta → Sistema Inteligente
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_34))  # Probabilidad → Sistema Inteligente
+g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_34))  # Calculo numerico → Sistema Inteligente
+g.add((EX.MAT_33, EX.esCorrelativaDe, EX.MAT_35))  # INSO → INSO II
+g.add((EX.MAT_23, EX.esCorrelativaDe, EX.MAT_33))  # Calculo Numerico → Seguridad y Auditoria
+
+#Optativas
+g.add((EX.MAT_15, EX.esCorrelativaDe, EX.MAT_37))  # Sistema de Informacion → ING. SOFT
+g.add((EX.MAT_14, EX.esCorrelativaDe, EX.MAT_38))  # Matematica Discreta → Sistema Inteligente
+g.add((EX.MAT_14, EX.esCorrelativaDe, EX.MAT_39))  # Probabilidad → Sistema Inteligente
+g.add((EX.MAT_15, EX.esCorrelativaDe, EX.MAT_40))  # Calculo numerico → Sistema Inteligente
+g.add((EX.MAT_22, EX.esCorrelativaDe, EX.MAT_41))  # INSO → INSO II
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_42))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_43))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_19, EX.esCorrelativaDe, EX.MAT_44))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_45))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_46))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_47))  # Calculo Numerico → Seguridad y Auditoria
 # ================================================================
 # 7) AXIOMAS OWL
 # ================================================================
