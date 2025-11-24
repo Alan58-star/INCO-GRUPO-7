@@ -94,9 +94,9 @@ materias_base = {
 materias = {
     # --- PRIMER AÑO (todas MOD_Hibrida) ---
     "MAT_1": ("Introducción a la Programación", 90, "MOD_Hibrida", 1),
-    "MAT_2": ("Álgebra Lineal", 90, "MOD_Hibrida", 1),
+    
     "MAT_3": ("Organización de Computadoras", 90, "MOD_Hibrida", 1),
-    "MAT_4": ("Análisis Matemático I", 90, "MOD_Hibrida", 1),
+    
     "MAT_5": ("Metodología de la Programación", 90, "MOD_Hibrida", 1),
     "MAT_6": ("Análisis Matemático II", 90, "MOD_Hibrida", 1),
     "MAT_7": ("Física Mecánica", 90, "MOD_Hibrida", 1),
@@ -453,21 +453,21 @@ g.add((EX.MAT_30, EX.esCorrelativaDe, EX.MAT_33))  # Sistema de Informacion → 
 g.add((EX.MAT_9, EX.esCorrelativaDe, EX.MAT_34))  # Matematica Discreta → Sistema Inteligente
 g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_34))  # Probabilidad → Sistema Inteligente
 g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_34))  # Calculo numerico → Sistema Inteligente
-g.add((EX.MAT_33, EX.esCorrelativaDe, EX.MAT_35))  # INSO → INSO II
-g.add((EX.MAT_23, EX.esCorrelativaDe, EX.MAT_33))  # Calculo Numerico → Seguridad y Auditoria
+
+g.add((EX.MAT_33, EX.esCorrelativaDe, EX.MAT_36))  # INSO → INSO II
 
 #Optativas
-g.add((EX.MAT_15, EX.esCorrelativaDe, EX.MAT_37))  # Sistema de Informacion → ING. SOFT
-g.add((EX.MAT_14, EX.esCorrelativaDe, EX.MAT_38))  # Matematica Discreta → Sistema Inteligente
-g.add((EX.MAT_14, EX.esCorrelativaDe, EX.MAT_39))  # Probabilidad → Sistema Inteligente
-g.add((EX.MAT_15, EX.esCorrelativaDe, EX.MAT_40))  # Calculo numerico → Sistema Inteligente
-g.add((EX.MAT_22, EX.esCorrelativaDe, EX.MAT_41))  # INSO → INSO II
-g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_42))  # Calculo Numerico → Seguridad y Auditoria
-g.add((EX.MAT_20, EX.esCorrelativaDe, EX.MAT_43))  # Calculo Numerico → Seguridad y Auditoria
-g.add((EX.MAT_19, EX.esCorrelativaDe, EX.MAT_44))  # Calculo Numerico → Seguridad y Auditoria
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_45))  # Calculo Numerico → Seguridad y Auditoria
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_46))  # Calculo Numerico → Seguridad y Auditoria
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_47))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_15, EX.esCorrelativaDe, EX.OPT_37))  # Sistema de Informacion → ING. SOFT
+g.add((EX.MAT_14, EX.esCorrelativaDe, EX.OPT_38))  # Matematica Discreta → Sistema Inteligente
+g.add((EX.MAT_14, EX.esCorrelativaDe, EX.OPT_39))  # Probabilidad → Sistema Inteligente
+g.add((EX.MAT_15, EX.esCorrelativaDe, EX.OPT_40))  # Calculo numerico → Sistema Inteligente
+g.add((EX.MAT_22, EX.esCorrelativaDe, EX.OPT_41))  # INSO → INSO II
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.OPT_42))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_20, EX.esCorrelativaDe, EX.OPT_43))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_19, EX.esCorrelativaDe, EX.OPT_44))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_45))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_46))  # Calculo Numerico → Seguridad y Auditoria
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_47))  # Calculo Numerico → Seguridad y Auditoria
 # ================================================================
 # 7) AXIOMAS OWL
 # ================================================================
