@@ -2,7 +2,9 @@ import rdflib
 from rdflib import Graph, Literal
 from rdflib.namespace import Namespace, RDF, RDFS, OWL, XSD
 from owlrl import DeductiveClosure, OWLRL_Semantics
-
+from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph
+import networkx as nx
+import matplotlib.pyplot as plt
 g = Graph()
 EX = Namespace("http://miuniversidad7.edu/ontologias#")
 g.bind("ex", EX)
@@ -747,3 +749,4 @@ mostrar_materias_restantes("EST003")
 mostrar_materias_disponibles_para_cursar("EST003")
 print("\n[OK] Sistema de recomendacion academica completado")
 print(f"Total de tripletas en el grafo: {len(g)}")
+
