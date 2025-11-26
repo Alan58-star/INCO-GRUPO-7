@@ -1,18 +1,239 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Interfaz HTML con Python</title>
-    <link rel="stylesheet" href="/static/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asesor Virtual Universitario</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
-    <h1>Formulario</h1>
-    <form method="POST">
-        <input type="text" name="nombre" placeholder="Escribe tu nombre">
-        <button type="submit">Enviar</button>
-    </form>
+    <div class="login-container" style="max-width: 1200px">
+        <div class="login-card" >
+            <div class="login-header">
+                <div class="logo-icon">⚡</div>
+                <h2>Asesor Virtual Universitario</h2>
+                <p>Completa el formulario para obtener recomendaciones personalizadas</p>
+            </div>
+            
+            <form class="login-form" id="loginForm" novalidate>
+                <!-- Información Personal -->
+                <div class="section-title">Información Personal</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text" id="nombre" name="nombre" required>
+                            <label for="nombre">Nombre Completo</label>
+                            <span class="input-line"></span>
+                        </div>
+                        <span class="error-message" id="nombreError"></span>
+                    </div>
 
-    {% if resultado %}
-        <h2>{{ resultado }}</h2>
-    {% endif %}
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="email" id="email" name="email" required autocomplete="email">
+                            <label for="email">Correo Electrónico</label>
+                            <span class="input-line"></span>
+                        </div>
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="tel" id="telefono" name="telefono" required>
+                            <label for="telefono">Teléfono</label>
+                            <span class="input-line"></span>
+                        </div>
+                        <span class="error-message" id="telefonoError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="number" id="edad" name="edad" required min="16" max="100">
+                            <label for="edad">Edad</label>
+                            <span class="input-line"></span>
+                        </div>
+                        <span class="error-message" id="edadError"></span>
+                    </div>
+                </div>
+
+                <!-- Información Académica -->
+                <div class="section-title">Información Académica</div>
+
+                <div class="form-group">
+                    <label class="select-label">Nivel de Estudios</label>
+                    <div class="select-wrapper">
+                        <select id="nivel" name="nivel" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="secundaria">Secundaria</option>
+                            <option value="universitario">Universitario</option>
+                            <option value="posgrado">Posgrado</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <span class="select-arrow"></span>
+                    </div>
+                    <span class="error-message" id="nivelError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="select-label">Área de Interés</label>
+                    <div class="select-wrapper">
+                        <select id="area" name="area" required>
+                            <option value="">Selecciona un área</option>
+                            <option value="ciencias">Ciencias</option>
+                            <option value="ingenieria">Ingeniería</option>
+                            <option value="humanidades">Humanidades</option>
+                            <option value="artes">Artes</option>
+                            <option value="negocios">Negocios</option>
+                            <option value="salud">Salud</option>
+                        </select>
+                        <span class="select-arrow"></span>
+                    </div>
+                    <span class="error-message" id="areaError"></span>
+                </div>
+
+                <!-- Preferencias -->
+                <div class="section-title">Preferencias de Estudio</div>
+
+                <div class="form-group">
+                    <label class="radio-group-label">Modalidad de Estudio</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="modalidad" value="presencial" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Presencial</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="modalidad" value="virtual" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Virtual</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="modalidad" value="hibrida" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Híbrida</span>
+                        </label>
+                    </div>
+                    <span class="error-message" id="modalidadError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="radio-group-label">Horario Preferido</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="manana" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Mañana</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="tarde" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Tarde</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="noche" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Noche</span>
+                        </label>
+                    </div>
+                    <span class="error-message" id="horarioError"></span>
+                </div>
+
+                <!-- Intereses -->
+                <div class="section-title">Intereses Adicionales</div>
+
+                <div class="form-group">
+                    <label class="checkbox-group-label">Áreas de Interés (selecciona todas las que apliquen)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="programacion">
+                            <span class="custom-checkbox"></span>
+                            <span class="checkbox-text">Programación</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="diseno">
+                            <span class="custom-checkbox"></span>
+                            <span class="checkbox-text">Diseño</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="matematicas">
+                            <span class="custom-checkbox"></span>
+                            <span class="checkbox-text">Matemáticas</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="idiomas">
+                            <span class="custom-checkbox"></span>
+                            <span class="checkbox-text">Idiomas</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="investigacion">
+                            <span class="custom-checkbox"></span>
+                            <span class="checkbox-text">Investigación</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="intereses" value="emprendimiento">
+                            <span class="custom-checkbox"></span>
+                            <span class="checkbox-text">Emprendimiento</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Rango de Presupuesto -->
+                <div class="form-group">
+                    <label class="range-label">
+                        Presupuesto Mensual: <span id="presupuestoValue">$500</span>
+                    </label>
+                    <input type="range" id="presupuesto" name="presupuesto" min="0" max="2000" value="500" step="50" class="range-input">
+                    <div class="range-labels">
+                        <span>$0</span>
+                        <span>$2000</span>
+                    </div>
+                </div>
+
+                <!-- Comentarios -->
+                <div class="form-group">
+                    <div class="textarea-wrapper">
+                        <textarea id="comentarios" name="comentarios" rows="4"></textarea>
+                        <label for="comentarios">Comentarios Adicionales (Opcional)</label>
+                        <span class="input-line"></span>
+                    </div>
+                </div>
+
+                <!-- Términos y Condiciones -->
+                <div class="form-group">
+                    <label class="checkbox-label terms-checkbox">
+                        <input type="checkbox" name="terminos" id="terminos" required>
+                        <span class="custom-checkbox"></span>
+                        <span class="checkbox-text">Acepto los <a href="#" class="terms-link">términos y condiciones</a></span>
+                    </label>
+                    <span class="error-message" id="terminosError"></span>
+                </div>
+
+                <button type="submit" class="login-btn btn">
+                    <span class="btn-text">OBTENER RECOMENDACIONES</span>
+                    <span class="btn-loader"></span>
+                    <span class="btn-glow"></span>
+                </button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h3>¡Formulario Enviado!</h3>
+                <p>Procesando tus recomendaciones personalizadas...</p>
+            </div>
+        </div>
+        
+        <div class="background-effects">
+            <div class="glow-orb glow-orb-1"></div>
+            <div class="glow-orb glow-orb-2"></div>
+            <div class="glow-orb glow-orb-3"></div>
+        </div>
+    </div>
+
+    <script src="../static/form-utils.js"></script>
+    <script src="../static/script.js"></script>
 </body>
 </html>

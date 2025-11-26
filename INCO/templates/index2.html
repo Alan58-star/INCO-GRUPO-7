@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interfaz HTML con Python</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <h1>Formulario</h1>
+    <form method="POST">
+        <input type="text" name="nombre" placeholder="Escribe tu nombre">
+        <button type="submit">Enviar</button>
+    </form>
+
+    {% if resultado %}
+        <h2>{{ resultado }}</h2>
+    {% endif %}
+</body>
+</html>
+
+<div class="formbold-main-wrapper">
+  <!-- Author: FormBold Team -->
+  <!-- Learn More: https://formbold.com -->
+  <div class="formbold-form-wrapper">
+    <img src="your-image-url-here.jpg">
+    <form action="https://formbold.com/s/FORM_ID" method="POST">
+      <div class="formbold-input-flex">
+        <div>
+          <label for="firstname" class="formbold-form-label">
+            First name
+          </label>
+          <input
+            type="text"
+            name="firstname"
+            id="firstname"
+            placeholder="Jane"
+            class="formbold-form-input"
+          />
+        </div>
+        <div>
+          <label for="lastname" class="formbold-form-label"> Last name </label>
+          <input
+            type="text"
+            name="lastname"
+            id="lastname"
+            placeholder="Cooper"
+            class="formbold-form-input"
+          />
+        </div>
+      </div>
+
+      <div class="formbold-mb-5">
+        <label for="qusOne" class="formbold-form-label">
+          All HTML code must be put which symbols?
+        </label>
+
+        <div class="formbold-radio-flex">
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusOne"
+                id="qusOne"
+              />
+              Option one
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusOne"
+                id="qusOne"
+              />
+              Option Two
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusOne"
+                id="qusOne"
+              />
+              Option Three
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusOne"
+                id="qusOne"
+              />
+              None of them
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="formbold-mb-5">
+        <label for="qusTwo" class="formbold-form-label">
+          To display any image on web which tag we have to use?
+        </label>
+
+        <div class="formbold-radio-flex">
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusTwo"
+                id="qusTwo"
+              />
+              Option one
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusTwo"
+                id="qusTwo"
+              />
+              Option Two
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusTwo"
+                id="qusTwo"
+              />
+              Option Three
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusTwo"
+                id="qusTwo"
+              />
+              None of them
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="qusThree" class="formbold-form-label">
+          What is the full definition of HTML?
+        </label>
+
+        <div class="formbold-radio-flex">
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusThree"
+                id="qusThree"
+              />
+              Option one
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusThree"
+                id="qusThree"
+              />
+              Option Two
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusThree"
+                id="qusThree"
+              />
+              Option Three
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+
+          <div class="formbold-radio-group">
+            <label class="formbold-radio-label">
+              <input
+                class="formbold-input-radio"
+                type="radio"
+                name="qusThree"
+                id="qusThree"
+              />
+              None of them
+              <span class="formbold-radio-checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button class="formbold-btn">Submit</button>
+    </form>
+  </div>
+</div>
+
+HTML
+Tailwind
+Copy
+<div class="main-center">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    <div class="form-container">
+        <img
+            src="https://ucarecdn.com/412d5bde-bec7-49c8-94c9-f6df6434ed12/address.png"
+            alt="Address Form Image"
+            class="form-img"
+        />
+        <form
+            action="https://formbold.com/s/FORM_ID"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            <div style="margin-bottom: 2rem">
+                <h2 class="form-title">Address Form</h2>
+                <p class="form-desc">
+                    Please provide your address details below. Fields marked
+                    with * are required.
+                </p>
+            </div>
+
+            <label for="fullname" class="form-label">Full Name*</label>
+            <input
+                type="text"
+                name="fullname"
+                id="fullname"
+                class="form-input"
+                placeholder="Enter your full name"
+                required
+            />
+
+            <label for="email" class="form-label">Email Address*</label>
+            <input
+                type="email"
+                name="email"
+                id="email"
+                class="form-input"
+                placeholder="Enter your email"
+                required
+            />
+
+            <label for="phone" class="form-label"
+                >Phone Number (Optional)</label
+            >
+            <input
+                type="tel"
+                name="phone"
+                id="phone"
+                class="form-input"
+                placeholder="Enter your phone number"
+            />
+
+            <label for="address-line-1" class="form-label"
+                >Street Address (Line 1)*</label
+            >
+            <input
+                type="text"
+                name="address-line-1"
+                id="address-line-1"
+                class="form-input"
+                placeholder="House No., Road Name, etc."
+                required
+            />
+
+            <label for="address-line-2" class="form-label"
+                >Street Address (Line 2) (Optional)</label
+            >
+            <input
+                type="text"
+                name="address-line-2"
+                id="address-line-2"
+                class="form-input"
+                placeholder="Apartment, Suite, Floor, etc."
+            />
+
+            <label for="city" class="form-label">City / Town*</label>
+            <input
+                type="text"
+                name="city"
+                id="city"
+                class="form-input"
+                placeholder="City or Town"
+                required
+            />
+
+            <label for="state" class="form-label"
+                >State / Province / Region*</label
+            >
+            <input
+                type="text"
+                name="state"
+                id="state"
+                class="form-input"
+                placeholder="State, Province, or Region"
+                required
+            />
+
+            <label for="postal-code" class="form-label"
+                >Postal / ZIP Code*</label
+            >
+            <input
+                type="text"
+                name="postal-code"
+                id="postal-code"
+                class="form-input"
+                placeholder="Postal or ZIP Code"
+                required
+            />
+
+            <label for="country" class="form-label">Country*</label>
+            <select name="country" id="country" class="form-select" required>
+                <option value="India">India</option>
+                <option value="USA">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+            </select>
+
+            <label for="purpose" class="form-label"
+                >Purpose of Form (Optional)</label
+            >
+            <select name="purpose" id="purpose" class="form-select">
+                <option value="new-address">New Address</option>
+                <option value="address-update">Address Update</option>
+                <option value="delivery-address">Delivery Address</option>
+                <option value="billing-address">Billing Address</option>
+                <option value="permanent-address">Permanent Address</option>
+            </select>
+
+            <label for="proof-of-address" class="form-label"
+                >Proof of Address (Optional)</label
+            >
+            <input
+                type="file"
+                name="proof-of-address"
+                id="proof-of-address"
+                accept=".pdf,.jpg,.jpeg,.png"
+                class="form-file"
+            />
+
+            <div class="form-checkbox-row">
+                <input
+                    type="checkbox"
+                    id="declaration"
+                    class="form-checkbox"
+                    required
+                />
+                <label
+                    for="declaration"
+                    style="margin: 0; font-weight: 500"
+                    class="form-label"
+                >
+                    I confirm this address is accurate and updated to the best
+                    of my knowledge.
+                </label>
+            </div>
+
+            <button class="form-btn">Submit Address</button>
+        </form>
+    </div>
+</div>
+
