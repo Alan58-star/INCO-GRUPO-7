@@ -64,14 +64,13 @@
                 <div class="section-title">Información Académica</div>
 
                 <div class="form-group">
-                    <label class="select-label">Nivel de Estudios</label>
+                    <label class="select-label">Nivel</label>
                     <div class="select-wrapper">
                         <select id="nivel" name="nivel" required>
                             <option value="">Selecciona una opción</option>
-                            <option value="secundaria">Secundaria</option>
-                            <option value="universitario">Universitario</option>
-                            <option value="posgrado">Posgrado</option>
-                            <option value="otro">Otro</option>
+                            <option value="">Ingresante</option>
+                            <option value="secundaria">Intermedio</option>
+                            <option value="universitario">Avanzado</option>
                         </select>
                         <span class="select-arrow"></span>
                     </div>
@@ -79,21 +78,52 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="select-label">Área de Interés</label>
+                    <label class="radio-group-label">¿Trabaja?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="manana" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Si</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="tarde" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">No</span>
+                        </label>
+                    </div>
+                    <span class="error-message" id="horarioError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="radio-group-label">¿Reside fuera de la capital?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="manana" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">Si</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="horario" value="tarde" required>
+                            <span class="custom-radio"></span>
+                            <span class="radio-text">No</span>
+                        </label>
+                    </div>
+                    <span class="error-message" id="horarioError"></span>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label class="select-label">Modalidad de cursado que prefiere</label>
                     <div class="select-wrapper">
                         <select id="area" name="area" required>
                             <option value="">Selecciona un área</option>
-                            <option value="ciencias">Ciencias</option>
-                            <option value="ingenieria">Ingeniería</option>
-                            <option value="humanidades">Humanidades</option>
-                            <option value="artes">Artes</option>
-                            <option value="negocios">Negocios</option>
-                            <option value="salud">Salud</option>
+                            <option value="ciencias">Presencial</option>
+                            <option value="ingenieria">Virtual</option>
+                            <option value="humanidades">Híbrido</option>
                         </select>
                         <span class="select-arrow"></span>
                     </div>
                     <span class="error-message" id="areaError"></span>
-                </div>
+                </div> -->
 
                 <!-- Preferencias -->
                 <div class="section-title">Preferencias de Estudio</div>
@@ -120,7 +150,7 @@
                     <span class="error-message" id="modalidadError"></span>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="radio-group-label">Horario Preferido</label>
                     <div class="radio-group">
                         <label class="radio-label">
@@ -140,10 +170,10 @@
                         </label>
                     </div>
                     <span class="error-message" id="horarioError"></span>
-                </div>
+                </div> -->
 
                 <!-- Intereses -->
-                <div class="section-title">Intereses Adicionales</div>
+                <div class="section-title">MATERIAS</div>
 
                 <div class="form-group">
                     <label class="checkbox-group-label">Áreas de Interés (selecciona todas las que apliquen)</label>
@@ -151,66 +181,66 @@
                         <label class="checkbox-label">
                             <input type="checkbox" name="intereses" value="programacion">
                             <span class="custom-checkbox"></span>
-                            <span class="checkbox-text">Programación</span>
+                            <span class="checkbox-text">Analisis Matematico I</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="intereses" value="diseno">
                             <span class="custom-checkbox"></span>
-                            <span class="checkbox-text">Diseño</span>
+                            <span class="checkbox-text">Algebra I</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="intereses" value="matematicas">
                             <span class="custom-checkbox"></span>
-                            <span class="checkbox-text">Matemáticas</span>
+                            <span class="checkbox-text">Fisica I</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="intereses" value="idiomas">
                             <span class="custom-checkbox"></span>
-                            <span class="checkbox-text">Idiomas</span>
+                            <span class="checkbox-text">Organización de computadoras</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="intereses" value="investigacion">
                             <span class="custom-checkbox"></span>
-                            <span class="checkbox-text">Investigación</span>
+                            <span class="checkbox-text">Logica Computacional</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="intereses" value="emprendimiento">
                             <span class="custom-checkbox"></span>
-                            <span class="checkbox-text">Emprendimiento</span>
+                            <span class="checkbox-text">Ingenieria del Conocimiento</span>
                         </label>
                     </div>
                 </div>
 
                 <!-- Rango de Presupuesto -->
                 <div class="form-group">
-                    <label class="range-label">
-                        Presupuesto Mensual: <span id="presupuestoValue">$500</span>
-                    </label>
-                    <input type="range" id="presupuesto" name="presupuesto" min="0" max="2000" value="500" step="50" class="range-input">
-                    <div class="range-labels">
+                    <!-- <label class="range-label">
+                        Presupuesto Mensual: <span id="presupuestoValue">$500</span> -->
+                    <!-- </label> -->
+                    <!-- <input type="range" id="presupuesto" name="presupuesto" min="0" max="2000" value="500" step="50" class="range-input"> -->
+                    <!-- <div class="range-labels">
                         <span>$0</span>
                         <span>$2000</span>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Comentarios -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="textarea-wrapper">
                         <textarea id="comentarios" name="comentarios" rows="4"></textarea>
                         <label for="comentarios">Comentarios Adicionales (Opcional)</label>
                         <span class="input-line"></span>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Términos y Condiciones -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="checkbox-label terms-checkbox">
                         <input type="checkbox" name="terminos" id="terminos" required>
                         <span class="custom-checkbox"></span>
                         <span class="checkbox-text">Acepto los <a href="#" class="terms-link">términos y condiciones</a></span>
                     </label>
                     <span class="error-message" id="terminosError"></span>
-                </div>
+                </div> -->
 
                 <button type="submit" class="login-btn btn">
                     <span class="btn-text">OBTENER RECOMENDACIONES</span>
