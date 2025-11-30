@@ -104,7 +104,7 @@ class CompleteForm {
         
         if (rangeInput && rangeValue) {
             rangeInput.addEventListener('input', (e) => {
-                rangeValue.textContent = `$${e.target.value}`;
+                rangeValue.textContent = `${e.target.value} hs`;
                 
                 // Add glow effect
                 rangeInput.style.boxShadow = '0 0 15px rgba(0, 255, 136, 0.3)';
@@ -451,7 +451,7 @@ class CompleteForm {
             
             // Reset range value
             const rangeValue = document.getElementById('presupuestoValue');
-            if (rangeValue) rangeValue.textContent = '$500';
+            if (rangeValue) rangeValue.textContent = '10 HS';
         }, 300);
     }
     

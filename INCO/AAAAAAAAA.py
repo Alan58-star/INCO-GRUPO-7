@@ -153,6 +153,23 @@ materias = {
     "TF": ("Trabajo Final", 200, "MOD_Presencial", 5),
 }
 
+def obtener_materias():
+    """
+    Devuelve una lista de diccionarios:
+    [{ "codigo": "MAT_1", "nombre": "Introducción a la Programación" }, ...]
+    """
+    lista = []
+    for codigo, (nombre, carga, modalidad, anio) in materias.items():
+        lista.append({
+            "codigo": codigo,
+            "nombre": nombre,
+            "carga": carga,
+            "modalidad": modalidad,
+            "anio": anio
+        })
+    return lista
+
+
 # Crear materias regulares
 for id, (nombre, carga, modalidad, anio) in materias.items():
     g.add((EX[id], RDF.type, EX.Materia))
