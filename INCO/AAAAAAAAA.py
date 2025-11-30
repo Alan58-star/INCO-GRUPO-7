@@ -6,7 +6,7 @@ from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph
 import networkx as nx
 import matplotlib.pyplot as plt
 g = Graph()
-EX = Namespace("http://miuniversidad7.edu/ontologias#")
+EX = Namespace("http://miEX.sidad7.edu/ontologias#")
 g.bind("ex", EX)
 g.bind("rdfs", RDFS)
 g.bind("xsd", XSD)
@@ -129,8 +129,6 @@ materias = {
     "MAT_34": ("Sistemas Inteligentes", 90, "MOD_Hibrida", 5),
     "MAT_35": ("Legislación, Ética y Ejercicio Profesional", 75, "MOD_Presencial", 5),
     "MAT_36": ("Ingeniería de Software II", 60, "MOD_Presencial", 5),
-    "MAT_37_PPS": ("Práctica Profesional Supervisada", 200, "MOD_Presencial", 5),
-    "MAT_38_TF": ("Trabajo Final", 200, "MOD_Presencial", 5),
 
     # --- OPTATIVAS ---
     "OPT_37": ("Compiladores", 90, "MOD_Hibrida", 3),
@@ -429,18 +427,16 @@ g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_34))
 g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_34))
 g.add((EX.MAT_33, EX.esCorrelativaDe, EX.MAT_36))
 
-# Optativas
-g.add((EX.MAT_15, EX.esCorrelativaDe, EX.OPT_37))
-g.add((EX.MAT_14, EX.esCorrelativaDe, EX.OPT_38))
-g.add((EX.MAT_14, EX.esCorrelativaDe, EX.OPT_39))
-g.add((EX.MAT_15, EX.esCorrelativaDe, EX.OPT_40))
-g.add((EX.MAT_22, EX.esCorrelativaDe, EX.OPT_41))
-g.add((EX.MAT_20, EX.esCorrelativaDe, EX.OPT_42))
-g.add((EX.MAT_20, EX.esCorrelativaDe, EX.OPT_43))
-g.add((EX.MAT_19, EX.esCorrelativaDe, EX.OPT_44))
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_45))
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_46))
-g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_47))
+g.add((EX.MAT_28, EX.esCorrelativaDe, EX.R1))  
+g.add((EX.MAT_29, EX.esCorrelativaDe, EX.R1))  
+g.add((EX.MAT_30, EX.esCorrelativaDe, EX.R1))  
+g.add((EX.MAT_32, EX.esCorrelativaDe, EX.R1))  
+
+g.add((EX.MAT_33, EX.esCorrelativaDe, EX.R2))  
+g.add((EX.MAT_34, EX.esCorrelativaDe, EX.R2))  
+g.add((EX.MAT_35, EX.esCorrelativaDe, EX.R2))  
+for c in range(1, 33):
+    g.add((EX[str(c)], EX.esCorrelativaDe, EX.R3))
 
 g.add((EX.MAT_27, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad y Auditoria
 g.add((EX.MAT_28, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad y Auditoria
@@ -448,7 +444,37 @@ g.add((EX.MAT_29, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad 
 g.add((EX.MAT_30, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad y Auditoria
 g.add((EX.MAT_32, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad y Auditoria
 
+g.add((EX.R3, EX.esCorrelativaDe, EX.PPS))
+g.add((EX.R3, EX.esCorrelativaDe, EX.TF))
 
+for m in ["MAT_33", "MAT_34", "MAT_35"]:
+    g.add((EX.MAT_31, EX.esCorrelativaDe, EX[m]))
+
+for m in ["MAT_36"]:
+    g.add((EX.MAT_33, EX.esCorrelativaDe, EX[m]))
+
+for opt in ["OPT_37","OPT_38","OPT_39","OPT_40","OPT_41","OPT_42","OPT_43","OPT_44","OPT_45","OPT_46","OPT_47"]:
+    g.add((EX[opt], EX.esCorrelativaDe, EX.MAT_21))
+    g.add((EX[opt], EX.esCorrelativaDe, EX.MAT_31))
+
+for m in ["OPT_37", "OPT_40"]:
+    g.add((EX.MAT_15, EX.esCorrelativaDe, EX[m]))
+
+for m in ["OPT_38", "OPT_39"]:
+    g.add((EX.MAT_14, EX.esCorrelativaDe, EX[m]))
+
+for m in ["OPT_41"]:
+    g.add((EX.MAT_22, EX.esCorrelativaDe, EX[m]))
+
+for m in ["OPT_42", "OPT_43"]:
+    g.add((EX.MAT_20, EX.esCorrelativaDe, EX[m]))
+
+for m in ["OPT_44"]:
+    g.add((EX.MAT_19, EX.esCorrelativaDe, EX[m]))
+
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_45))
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_46))
+g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_47))
 # ================================================================
 # 7) AXIOMAS OWL
 # ================================================================
@@ -505,7 +531,7 @@ def crear_estudiante(id_est, nivel, trabaja, holgura, distancia, horas_sem,
 def obtener_recomendaciones(id_estudiante):
     """Obtiene recomendaciones personalizadas"""
     perfil_query = f"""
-    PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     SELECT ?nivel ?trabaja ?holgura ?distancia
     WHERE {{
         ex:{id_estudiante} ex:nivelAvance ?nivel ;
@@ -532,7 +558,7 @@ def obtener_recomendaciones(id_estudiante):
         tipo_rec = "ex:RecomendacionAvanzado"
 
     query = f"""
-    PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
@@ -561,7 +587,7 @@ def obtener_recomendaciones(id_estudiante):
 def obtener_materias_restantes(id_estudiante):
     """Obtiene las materias que AÚN NO HA APROBADO el estudiante"""
     query_aprobadas = f"""
-    PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     SELECT ?materia
     WHERE {{
         ex:{id_estudiante} ex:materiaAprobada ?materia .
@@ -572,7 +598,7 @@ def obtener_materias_restantes(id_estudiante):
     aprobadas = [str(row[0]).split("#")[-1] for row in aprobadas_result]
 
     query_todas = """
-    PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT DISTINCT ?materia ?nombre ?modalidad ?anio ?carga
@@ -602,7 +628,7 @@ def obtener_materias_restantes(id_estudiante):
 def obtener_materias_disponibles_para_cursar(id_estudiante):
     """Obtiene las materias que puede cursar AHORA (correlativas cumplidas)"""
     query_aprobadas = f"""
-    PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     SELECT ?materia
     WHERE {{
         ex:{id_estudiante} ex:materiaAprobada ?materia .
@@ -614,7 +640,7 @@ def obtener_materias_disponibles_para_cursar(id_estudiante):
 
     if not aprobadas:
         query_sin_correlativas = """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         
         SELECT DISTINCT ?materia ?nombre ?modalidad ?anio
@@ -638,7 +664,7 @@ def obtener_materias_disponibles_para_cursar(id_estudiante):
     aprobadas_uris = ", ".join([f"ex:{m}" for m in aprobadas])
 
     query_disponibles = f"""
-    PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT DISTINCT ?materia ?nombre ?modalidad ?anio
@@ -741,7 +767,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
     reglas = [
         # R1: Si comete error de procrastinación, recomendar estrategia de micro-estudios
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         CONSTRUCT { 
             ?estudiante ex:deberiaUsar ex:EST_MicroEstudios .
             ?estudiante ex:recomendacionGenerada "Usar micro-estudios para evitar procrastinación" .
@@ -754,7 +780,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R2: Si comete error de no revisar cronogramas, recomendar estudio anticipado
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         CONSTRUCT { 
             ?estudiante ex:deberiaUsar ex:EST_EstudioAnticipado .
             ?estudiante ex:recomendacionGenerada "Implementar estudio anticipado y revisar cronogramas semanalmente" .
@@ -767,7 +793,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R3: Si estudia último día, recomendar rutina semanal
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         CONSTRUCT { 
             ?estudiante ex:deberiaUsar ex:EST_RutinaSemanal .
             ?estudiante ex:recomendacionGenerada "Establecer rutina semanal de estudio constante" .
@@ -780,7 +806,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R4: Si prefiere virtual y tiene materias virtuales disponibles
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         CONSTRUCT { 
             ?estudiante ex:materiaPrioritaria ?materia .
@@ -804,7 +830,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R5: Si prefiere presencial y tiene materias presenciales disponibles
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         CONSTRUCT { 
             ?estudiante ex:materiaPrioritaria ?materia .
@@ -828,7 +854,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R6: Si trabaja y vive lejos, priorizar materias virtuales
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         CONSTRUCT { 
             ?estudiante ex:materiaPrioritaria ?materia .
@@ -853,7 +879,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R7: Si comete error de sobrecarga, limitar materias según horas disponibles
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         CONSTRUCT { 
             ?estudiante ex:recomendacionGenerada "Limitar cantidad de materias: máximo 2 materias por cuatrimestre" .
         }
@@ -866,7 +892,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R8: Si tiene tiempo bajo y trabaja, recomendar materias de menor carga
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         CONSTRUCT { 
             ?estudiante ex:materiaPrioritaria ?materia .
@@ -893,7 +919,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R9: Si es avanzado y le faltan materias de años anteriores
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         CONSTRUCT { 
             ?estudiante ex:materiaPrioritaria ?materia .
@@ -919,7 +945,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         
         # R10: Si tiene holgura y no trabaja, recomendar aumentar carga de materias
         """
-        PREFIX ex: <http://miuniversidad7.edu/ontologias#>
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         CONSTRUCT { 
             ?estudiante ex:recomendacionGenerada "Puedes aumentar tu carga académica: considera 3-4 materias por cuatrimestre" .
         }
