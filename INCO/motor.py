@@ -444,16 +444,16 @@ g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_34))
 g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_34))
 g.add((EX.MAT_33, EX.esCorrelativaDe, EX.MAT_36))
 
-g.add((EX.MAT_28, EX.esCorrelativaDe, EX.R1))  
-g.add((EX.MAT_29, EX.esCorrelativaDe, EX.R1))  
-g.add((EX.MAT_30, EX.esCorrelativaDe, EX.R1))  
-g.add((EX.MAT_32, EX.esCorrelativaDe, EX.R1))  
+g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_28))  
+g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_29))  
+g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_30))  
+g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_32))  
 
-g.add((EX.MAT_33, EX.esCorrelativaDe, EX.R2))  
-g.add((EX.MAT_34, EX.esCorrelativaDe, EX.R2))  
-g.add((EX.MAT_35, EX.esCorrelativaDe, EX.R2))  
+g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_33))  
+g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_34))  
+g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_35))  
 for c in range(1, 33):
-    g.add((EX[str(c)], EX.esCorrelativaDe, EX.R3))
+    g.add((EX["MAT_" + str(c)], EX.esCorrelativaDe, EX.R3))
 
 g.add((EX.MAT_27, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad y Auditoria
 g.add((EX.MAT_28, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad y Auditoria
@@ -466,9 +466,6 @@ g.add((EX.R3, EX.esCorrelativaDe, EX.TF))
 
 for m in ["MAT_33", "MAT_34", "MAT_35"]:
     g.add((EX.MAT_31, EX.esCorrelativaDe, EX[m]))
-
-for m in ["MAT_36"]:
-    g.add((EX.MAT_33, EX.esCorrelativaDe, EX[m]))
 
 for opt in ["OPT_37","OPT_38","OPT_39","OPT_40","OPT_41","OPT_42","OPT_43","OPT_44","OPT_45","OPT_46","OPT_47"]:
     g.add((EX[opt], EX.esCorrelativaDe, EX.MAT_21))
