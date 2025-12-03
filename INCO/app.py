@@ -27,9 +27,9 @@ MAPEO_MODALIDAD = {
 }
 
 MAPEO_TIEMPO = {
-    "presencial": "TIEMPO_Bajo",   # Asumimos mapeo según orden del HTML
-    "virtual": "TIEMPO_Medio",
-    "hibrida": "TIEMPO_Alto"
+    "tiempo_bajo": "TIEMPO_Bajo",   # Asumimos mapeo según orden del HTML
+    "tiempo_medio": "TIEMPO_Medio",
+    "tiempo_alto": "TIEMPO_Alto"
 }
 
 @app.route("/", methods=["GET"])
@@ -72,8 +72,8 @@ def procesar():
             "errores": [MAPEO_ERRORES.get(e) for e in datos_html["errores_raw"] if MAPEO_ERRORES.get(e)],
             "estrategias": [MAPEO_ESTRATEGIAS.get(e) for e in datos_html["estrategias_raw"] if MAPEO_ESTRATEGIAS.get(e)]
         }
-
-        print("Datos procesados:", datos_procesados) # Debug
+        print(datos_procesados)
+        
 
         # 3. Llamar al Motor
         # A) Crear perfil en el grafo

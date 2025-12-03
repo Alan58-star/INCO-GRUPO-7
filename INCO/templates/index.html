@@ -7,23 +7,132 @@
     <title>Asesor Virtual Universitario</title>
     <link rel="stylesheet" href="../static/style.css">
     <style>
-        /* Estilos rápidos para la respuesta */
-        .res-section { margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #4a90e2; }
-        .res-title { font-weight: bold; font-size: 1.2em; color: #333; margin-bottom: 10px; }
-        .rec-item { background: white; padding: 10px; margin-bottom: 8px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .rec-text { font-weight: 600; color: #2c3e50; }
-        .rec-why { font-size: 0.9em; color: #666; font-style: italic; margin-top: 4px; }
-        .mat-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-        .mat-item { background: #e3f2fd; padding: 8px; border-radius: 4px; text-align: center; font-size: 0.9em; }
-    </style>
-   <link rel="shortcut icon" href="/INCO/static/G7-Icono.ico" type="image/x-icon">
+    body {
+        background: #0d0d0d;
+        color: #ffffff;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    /* Caja de resultados */
+    #resultadoBox {
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 12px;
+        background: #111;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.6);
+        animation: aparecer 0.4s ease;
+        color: #e6e6e6;
+    }
+
+    @keyframes aparecer {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Sección */
+    .res-section {
+        margin-top: 25px;
+        padding: 15px;
+        background: #1a1a1a;
+        border-left: 4px solid #4a90e2;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    }
+
+    .res-title {
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-bottom: 12px;
+        color: #76b3ff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Recomendación individual */
+    .rec-item {
+        background: #222;
+        padding: 14px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        border: 1px solid #333;
+        transition: 0.2s;
+        color: #f2f2f2;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .rec-item:hover {
+        transform: scale(1.02);
+        background: #2a2a2a;
+    }
+
+    .rec-text {
+        font-weight: 600;
+        color: #9cc9ff;
+    }
+
+    .rec-why {
+        font-size: 0.9em;
+        color: #cccccc;
+        margin-top: 5px;
+    }
+
+    /* Materias */
+    .mat-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .mat-item {
+        background: #1b1b1b;
+        padding: 12px;
+        border-radius: 10px;
+        border-left: 4px solid #2ecc71;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        transition: 0.2s;
+        color: #e8e8e8;
+    }
+
+    .mat-item:hover {
+        transform: translateY(-2px);
+        background: #242424;
+    }
+
+    /* Loader */
+    .success-message {
+        animation: fadeIn 0.3s;
+        color: #76b3ff;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #333;
+        border-top-color: #4a90e2;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+</style>
+    <link rel="shortcut icon" href="../static/G7-Icono.ico" type="image/x-icon">
 </head>
 
 <body>
     <div class="login-container" style="max-width: 1200px">
         <div class="login-card">
             <div class="login-header">
-                <div class="logo-icon"><img src="/INCO/static/G7-Icono.ico" alt=""></div>
+                <div class="logo-icon"><img src="../static/G7-Logo.jpeg" alt="" width="100px" height="100px"></div>
                 <h2>Asesor Virtual Universitario</h2>
                 <p>Completa el formulario para obtener recomendaciones personalizadas</p>
             </div>
@@ -106,10 +215,19 @@
                 </div>
 
                 <!-- HORAS SEMANALES -->
-                <div class="form-group"> <label class="range-label"> Horas disponibles en la semana: <span
-                            id="presupuestoValue">10 hs</span> </label> <input type="range" id="horas"
-                        name="horas" min="1" max="50" value="10" step="1" class="range-input">
-                    <div class="range-labels"> <span>1 hs</span> <span>50 hs</span> </div>
+                <div class="form-group">
+                    <label class="range-label">
+                        Horas disponibles en la semana:
+                        <span id="presupuestoValue">10 hs</span>
+                    </label>
+
+                    <input type="range" id="horas" name="horas" min="1" max="50" value="10" step="1"
+                        class="range-input">
+
+                    <div class="range-labels">
+                        <span>1 hs</span>
+                        <span>50 hs</span>
+                    </div>
                 </div>
                 <!-- <div class="form-group"> <label class="select-label">Modalidad de cursado que prefiere</label> <div class="select-wrapper"> <select id="area" name="area" required> <option value="">Selecciona un área</option> <option value="ciencias">Presencial</option> <option value="ingenieria">Virtual</option> <option value="humanidades">Híbrido</option> </select> <span class="select-arrow"></span> </div> <span class="error-message" id="areaError"></span> </div> -->
                 <!-- Preferencias -->
@@ -155,12 +273,12 @@
                 </div>
                 <div class="form-group"> <label class="radio-group-label">Tiempo de Estudio</label>
                     <div class="radio-group"> <label class="radio-label"> <input type="radio" name="tiempo"
-                                value="presencial" required> <span class="custom-radio"></span> <span
+                                value="tiempo_bajo" required> <span class="custom-radio"></span> <span
                                 class="radio-text">Menos de 10 horas semanales</span> </label> <label
-                            class="radio-label"> <input type="radio" name="tiempo" value="virtual" required> <span
+                            class="radio-label"> <input type="radio" name="tiempo" value="tiempo_medio" required> <span
                                 class="custom-radio"></span> <span class="radio-text">Entre 10 y 20 horas
                                 semanales</span> </label> <label class="radio-label"> <input type="radio" name="tiempo"
-                                value="hibrida" required> <span class="custom-radio"></span> <span
+                                value="tiempo_alto" required> <span class="custom-radio"></span> <span
                                 class="radio-text">Más de 20 horas semanales</span> </label> </div> <span
                         class="error-message" id="modalidadError"></span>
                 </div>
@@ -182,11 +300,12 @@
 
             <!-- RESULTADO DINÁMICO -->
             <div id="resultadoBox"></div>
-            
-            <div class="success-message" id="successMessage" style="display:none; text-align: center; margin-top: 20px;">
-                <div class="success-icon" style="font-size: 2em;">⏳</div>
-                <h3>Procesando...</h3>
-            </div>
+
+            <div class="success-message" id="successMessage"
+     style="display:none; text-align:center; margin-top:20px;">
+    <div class="spinner"></div>
+    <h3 style="margin-top:10px;">Procesando...</h3>
+</div>
 
         </div>
     </div>
@@ -194,72 +313,96 @@
 
     <!-- SCRIPT AJAX -->
     <script>
-        function enviarFormulario() {
-            const form = document.getElementById("loginForm");
-            const formData = new FormData(form);
-            const resultBox = document.getElementById("resultadoBox");
-            const loading = document.getElementById("successMessage");
+function enviarFormulario() {
+    const form = document.getElementById("loginForm");
+    const formData = new FormData(form);
+    const resultBox = document.getElementById("resultadoBox");
+    const loading = document.getElementById("successMessage");
 
-            // Mostrar carga
-            loading.style.display = "block";
-            resultBox.innerHTML = "";
+    loading.style.display = "block";
+    resultBox.innerHTML = "";
 
-            fetch("/procesar", {
-                method: "POST",
-                body: formData
-            })
-            .then(r => r.json())
-            .then(data => {
-                loading.style.display = "none";
+    fetch("/procesar", {
+        method: "POST",
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        loading.style.display = "none";
 
-                if(data.status === "error") {
-                    resultBox.innerHTML = `<p style="color:red">Error: ${data.message}</p>`;
-                    return;
-                }
+        if (data.status === "error") {
+            resultBox.innerHTML = `<p style="color:#ff8080">Error: ${data.message}</p>`;
+            return;
+        }
 
-                // Construir HTML de respuesta
-                let html = `<h2>Hola, ${data.usuario}</h2>`;
+        let html = `<h2 style="color:#76b3ff;">Hola, ${data.usuario}</h2>`;
 
-                // 1. Mostrar Recomendaciones
-                html += `<div class="res-section" ><div class="res-title">💡 Tus Recomendaciones Personalizadas</div>`;
-                if(data.recomendaciones.length === 0){
-                    html += `<p>No hay recomendaciones específicas por ahora.</p>`;
-                } else {
-                    data.recomendaciones.forEach(rec => {
-                        html += `
-                        <div class="rec-item">
-                            <div class="rec-text">${rec.texto}</div>
-                            <div class="rec-why">🔎 Por qué: ${rec.explicacion}</div>
-                        </div>`;
-                    });
-                }
-                html += `</div>`;
+        /* Recomendaciones */
+        html += `
+        <div class="res-section">
+            <div class="res-title">🧠 Recomendaciones Personalizadas</div>
+        `;
 
-                // 2. Mostrar Materias Disponibles
-                html += `<div class="res-section"><div class="res-title">📚 Materias que puedes cursar YA</div>`;
-                html += `<div class="mat-list">`;
-                if(data.materias_disponibles.length === 0){
-                    html += `<p>No tienes materias disponibles (o ya terminaste).</p>`;
-                } else {
-                    data.materias_disponibles.forEach(mat => {
-                        html += `<div class="mat-item">
-                                    <strong>${mat.nombre}</strong><br>
-                                    <small>Año: ${mat.anio} | ${mat.modalidad}</small>
-                                 </div>`;
-                    });
-                }
-                html += `</div></div>`;
-
-                resultBox.innerHTML = html;
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                loading.style.display = "none";
-                resultBox.innerHTML = "<p>Ocurrió un error al conectar con el servidor.</p>";
+        if (data.recomendaciones.length === 0) {
+            html += `<p>No hay recomendaciones específicas.</p>`;
+        } else {
+            data.recomendaciones.forEach(rec => {
+                html += `
+                <div class="rec-item">
+                    <div class="rec-text">${rec.texto}</div>
+                    <div class="rec-why">📌 Motivo: ${rec.explicacion}</div>
+                </div>`;
             });
         }
-    </script>
+        html += `</div>`;
 
+        /* Materias disponibles */
+        html += `
+        <div class="res-section">
+            <div class="res-title">🎓 Materias Disponibles</div>
+            <div class="mat-list">
+        `;
+
+        data.materias_disponibles.forEach(mat => {
+            html += `
+            <div class="mat-item">
+                <strong>${mat.nombre}</strong><br>
+                <small>Año: ${mat.anio} | ${mat.modalidad}</small>
+            </div>`;
+        });
+
+        html += `</div></div>`;
+
+        resultBox.innerHTML = html;
+    })
+    .catch(err => {
+        loading.style.display = "none";
+        resultBox.innerHTML = "<p>Ocurrió un error al conectar con el servidor.</p>";
+    });
+}
+</script>
+
+    <script>
+        const slider = document.getElementById("horas");
+        const bubble = document.getElementById("presupuestoValue");
+
+        function updateBubble() {
+            const value = slider.value;
+            const min = slider.min;
+            const max = slider.max;
+
+            // Calcular posición del bubble
+            const percent = (value - min) / (max - min);
+            const pos = percent * slider.offsetWidth;
+
+            bubble.style.left = pos + "px";
+            bubble.textContent = value + " hs";
+        }
+
+        updateBubble();
+
+        slider.addEventListener("input", updateBubble);
+    </script>
 </body>
 
 </html>

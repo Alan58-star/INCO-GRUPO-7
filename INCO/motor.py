@@ -109,7 +109,6 @@ materias = {
     "MAT_18": ("Sistemas Operativos I", 90, "MOD_Virtual", 3),
     "MAT_19": ("Organización Empresarial y Modelos de Negocios", 90, "MOD_Virtual", 3),
     "MAT_20": ("Modelado Orientado a Objetos", 90, "MOD_Hibrida", 3),
-    "MAT_21": ("Cursos Optativos (90h)", 90, "MOD_Hibrida", 3),
     "MAT_22": ("Teoría de Autómatas, Lenguajes y Computación", 90, "MOD_Hibrida", 3),
     "MAT_23": ("Sistemas Operativos II", 90, "MOD_Virtual", 3),
     "MAT_24": ("Métodos de Simulación", 60, "MOD_Virtual", 3),
@@ -121,7 +120,6 @@ materias = {
     "MAT_28": ("Ingeniería del Conocimiento", 90, "MOD_Hibrida", 4),
     "MAT_29": ("Arquitectura de Computadoras Paralelas", 60, "MOD_Presencial", 4),
     "MAT_30": ("Sistemas de Información", 90, "MOD_Presencial", 4),
-    "MAT_31": ("Cursos Optativos (180h)", 180, "MOD_Hibrida", 4),
     "MAT_32": ("Seguridad y Auditoría Informática", 75, "MOD_Presencial", 4),
 
     # --- QUINTO AÑO ---
@@ -129,8 +127,18 @@ materias = {
     "MAT_34": ("Sistemas Inteligentes", 90, "MOD_Hibrida", 5),
     "MAT_35": ("Legislación, Ética y Ejercicio Profesional", 75, "MOD_Presencial", 5),
     "MAT_36": ("Ingeniería de Software II", 60, "MOD_Presencial", 5),
-
-    # --- OPTATIVAS ---
+   
+   
+    # REQUISITOS
+    "R1": ("Nivel de Suficiencia de Ingles", 0, "MOD_Hibrida", 0),
+    "R2": ("Nivel de Aptitud de Ingles", 0, "MOD_Hibrida", 0),
+    "R3": ("Todas las materias regulares hasta Cuarto", 0, "MOD_Hibrida", 0),
+    # PRACTICA PROFESIONAL
+    "PPS": ("Práctica Profesional Supervisada", 200, "MOD_Presencial", 5),
+    # FINAL
+    "TF": ("Trabajo Final", 200, "MOD_Presencial", 5),
+}
+optativas={
     "OPT_37": ("Compiladores", 90, "MOD_Hibrida", 3),
     "OPT_38": ("Aplicaciones de Bases de Datos I", 90, "MOD_Virtual", 3),
     "OPT_39": ("Aplicaciones de Bases de Datos II", 90, "MOD_Virtual", 3),
@@ -141,43 +149,28 @@ materias = {
     "OPT_44": ("Modelado y Proceso de Negocios", 90, "MOD_Hibrida", 3),
     "OPT_45": ("Taller de Formación Profesional", 60, "MOD_Hibrida", 3),
     "OPT_46": ("Taller de Metodología de la Investigación Científica", 60, "MOD_Hibrida", 3),
-    "OPT_47": ("Gestión Ambiental", 60, "MOD_Hibrida", 3),
-
-    # REQUISITOS
-    "R1": ("Nivel de Suficiencia de Ingles", 0, "MOD_Hibrida", 0),
-    "R2": ("Nivel de Aptitud de Ingles", 0, "MOD_Hibrida", 0),
-    "R3": ("Todas las materias regulares hasta Cuarto", 0, "MOD_Hibrida", 0),
-    # PRACTICA PROFESIONAL
-    "PPS": ("Práctica Profesional Supervisada", 200, "MOD_Presencial", 5),
-    # FINAL
-    "TF": ("Trabajo Final", 200, "MOD_Presencial", 5),
+    "OPT_47": ("Gestión Ambiental", 60, "MOD_Hibrida", 3)
 }
 
-def obtener_materias():
-    """
-    Devuelve una lista de diccionarios:
-    [{ "codigo": "MAT_1", "nombre": "Introducción a la Programación" }, ...]
-    """
-    lista = []
-    for codigo, (nombre, carga, modalidad, anio) in materias.items():
-        lista.append({
-            "codigo": codigo,
-            "nombre": nombre,
-            "carga": carga,
-            "modalidad": modalidad,
-            "anio": anio
-        })
-    return lista
 
 
 # Crear materias regulares
+
 for id, (nombre, carga, modalidad, anio) in materias.items():
     g.add((EX[id], RDF.type, EX.Materia))
     g.add((EX[id], RDFS.label, Literal(nombre)))
     g.add((EX[id], EX.cargaHoraria, Literal(carga, datatype=XSD.positiveInteger)))
     g.add((EX[id], EX.tieneModalidad, EX[modalidad]))
     g.add((EX[id], EX.anio, Literal(anio, datatype=XSD.integer)))
-
+g.add((EX.requiereCargaHorariaOptativas, RDF.type, OWL.DatatypeProperty))
+g.add((EX.requiereCargaHorariaOptativas, RDFS.range, XSD.integer))
+g.add((EX.Optativa, RDFS.subClassOf, EX.Materia))
+for id, (nombre, carga, modalidad, anio) in optativas.items():
+    g.add((EX[id], RDF.type, EX.Optativa))
+    g.add((EX[id], RDFS.label, Literal(nombre)))
+    g.add((EX[id], EX.cargaHoraria, Literal(carga, datatype=XSD.positiveInteger)))
+    g.add((EX[id], EX.tieneModalidad, EX[modalidad]))
+    g.add((EX[id], EX.anio, Literal(anio, datatype=XSD.integer)))
 # ================================================================
 # 4) MODALIDADES, ERRORES, ESTRATEGIAS, TIEMPOS
 # ================================================================
@@ -388,8 +381,9 @@ agregar_recomendaciones(recomendaciones_int, EX.RecomendacionIntermedio)
 agregar_recomendaciones(recomendaciones_avan, EX.RecomendacionAvanzado)
 
 # ================================================================
-# 6) CORRELATIVIDADES (AMPLIADO Y REALISTA)
+# 6) CORRELATIVIDADES
 # ================================================================
+# Definición de la materia de 5to año
 
 # Primer año → Segundo año
 g.add((EX.MAT_1, EX.esCorrelativaDe, EX.MAT_5))
@@ -439,6 +433,7 @@ g.add((EX.MAT_23, EX.esCorrelativaDe, EX.MAT_32))
 
 # Quinto Año
 g.add((EX.MAT_30, EX.esCorrelativaDe, EX.MAT_33))
+
 g.add((EX.MAT_9, EX.esCorrelativaDe, EX.MAT_34))
 g.add((EX.MAT_12, EX.esCorrelativaDe, EX.MAT_34))
 g.add((EX.MAT_16, EX.esCorrelativaDe, EX.MAT_34))
@@ -448,8 +443,9 @@ g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_28))
 g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_29))  
 g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_30))  
 g.add((EX.R1, EX.esCorrelativaDe, EX.MAT_32))  
-
-g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_33))  
+  
+g.add((EX.R1, EX.esCorrelativaDe, EX.R2))
+g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_33))
 g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_34))  
 g.add((EX.R2, EX.esCorrelativaDe, EX.MAT_35))  
 for c in range(1, 33):
@@ -463,13 +459,6 @@ g.add((EX.MAT_32, EX.esCorrelativaDe, EX.R3))  # Calculo Numerico → Seguridad 
 
 g.add((EX.R3, EX.esCorrelativaDe, EX.PPS))
 g.add((EX.R3, EX.esCorrelativaDe, EX.TF))
-
-for m in ["MAT_33", "MAT_34", "MAT_35"]:
-    g.add((EX.MAT_31, EX.esCorrelativaDe, EX[m]))
-
-for opt in ["OPT_37","OPT_38","OPT_39","OPT_40","OPT_41","OPT_42","OPT_43","OPT_44","OPT_45","OPT_46","OPT_47"]:
-    g.add((EX[opt], EX.esCorrelativaDe, EX.MAT_21))
-    g.add((EX[opt], EX.esCorrelativaDe, EX.MAT_31))
 
 for m in ["OPT_37", "OPT_40"]:
     g.add((EX.MAT_15, EX.esCorrelativaDe, EX[m]))
@@ -489,6 +478,17 @@ for m in ["OPT_44"]:
 g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_45))
 g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_46))
 g.add((EX.MAT_12, EX.esCorrelativaDe, EX.OPT_47))
+
+# Requisito de horas
+g.add((EX.MAT_33, EX.requiereCargaHorariaOptativas, Literal(180, datatype=XSD.integer)))
+g.add((EX.MAT_28, EX.requiereCargaHorariaOptativas, Literal(90, datatype=XSD.integer)))
+g.add((EX.MAT_29, EX.requiereCargaHorariaOptativas, Literal(90, datatype=XSD.integer)))
+g.add((EX.MAT_30, EX.requiereCargaHorariaOptativas, Literal(90, datatype=XSD.integer)))
+g.add((EX.MAT_32, EX.requiereCargaHorariaOptativas, Literal(90, datatype=XSD.integer)))
+g.add((EX.MAT_34, EX.requiereCargaHorariaOptativas, Literal(180, datatype=XSD.integer)))
+g.add((EX.MAT_35, EX.requiereCargaHorariaOptativas, Literal(180, datatype=XSD.integer)))
+
+
 # ================================================================
 # 7) AXIOMAS OWL
 # ================================================================
@@ -502,10 +502,7 @@ DeductiveClosure(OWLRL_Semantics).expand(g)
 # 8) FUNCIONES DE CONSULTA Y RECOMENDACIÓN
 # ================================================================
 def crear_estudiante_y_razonar(datos):
-    """
-    Crea un estudiante temporal, ejecuta el razonador y devuelve resultados.
-    Usa un ID único para no mezclar peticiones.
-    """
+   
     id_est = f"EST_{uuid.uuid4().hex[:8]}"
     
     # 1. Crear Estudiante
@@ -534,10 +531,7 @@ def crear_estudiante_y_razonar(datos):
     if datos['tiempo_estudio']:
         g.add((EX[id_est], EX.tieneTiempoEstudio, EX[datos['tiempo_estudio']]))
 
-    # 2. Aplicar Razonador (Solo expansión simple si es necesario, o confiar en SPARQL)
-    # DeductiveClosure(OWLRL_Semantics).expand(g) # Opcional: puede ser lento en cada request. 
-    # Usaremos SPARQL directo que es más rápido para web.
-
+  
     return id_est
 
 def obtener_recomendaciones_json(id_estudiante):
@@ -600,18 +594,160 @@ def obtener_recomendaciones_json(id_estudiante):
 def obtener_inferencias_json(id_estudiante):
     """Devuelve lista de diccionarios con reglas inferidas"""
     reglas = [
-        # (Aquí van tus strings de queries CONSTRUCT de las reglas R1 a R9...)
-        # COPIA LAS REGLAS QUE TE DI EN LA RESPUESTA ANTERIOR (CON EL MOTIVO)
-        # Ejemplo abreviado:
+        # R1: Procrastinación
         """
         PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
         CONSTRUCT { 
-            ?estudiante ex:recomendacionGenerada "Usar micro-estudios" .
-            ?estudiante ex:motivoGenerado "Detectado error: Procrastinación." 
-        } WHERE { ?estudiante ex:cometeErrorFrecuente ex:ERR_Procrastinacion . }
+            ?estudiante ex:deberiaUsar ex:EST_MicroEstudios .
+            ?estudiante ex:recomendacionGenerada "Usar micro-estudios para evitar procrastinación" .
+            ?estudiante ex:motivoGenerado "Detectado error frecuente: Procrastinación." .
+        }
+        WHERE {
+            ?estudiante ex:cometeErrorFrecuente ex:ERR_Procrastinacion .
+            FILTER NOT EXISTS { ?estudiante ex:usaEstrategiaEstudio ex:EST_MicroEstudios }
+        }
         """,
-        # ... Agrega el resto de reglas R2 a R10 aquí ...
+        
+        # R2: No cronogramas
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        CONSTRUCT { 
+            ?estudiante ex:deberiaUsar ex:EST_EstudioAnticipado .
+            ?estudiante ex:recomendacionGenerada "Implementar estudio anticipado" .
+            ?estudiante ex:motivoGenerado "Detectado error: No revisar cronogramas." .
+        }
+        WHERE {
+            ?estudiante ex:cometeErrorFrecuente ex:ERR_NoCronogramas .
+            FILTER NOT EXISTS { ?estudiante ex:usaEstrategiaEstudio ex:EST_EstudioAnticipado }
+        }
+        """,
+        
+        # R3: Estudio último día
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        CONSTRUCT { 
+            ?estudiante ex:deberiaUsar ex:EST_RutinaSemanal .
+            ?estudiante ex:recomendacionGenerada "Establecer rutina semanal estricta" .
+            ?estudiante ex:motivoGenerado "Detectado hábito de estudiar el último día." .
+        }
+        WHERE {
+            ?estudiante ex:cometeErrorFrecuente ex:ERR_EstudioUltimoDia .
+            FILTER NOT EXISTS { ?estudiante ex:usaEstrategiaEstudio ex:EST_RutinaSemanal }
+        }
+        """,
+        
+        # R4: Preferencia Virtual
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        CONSTRUCT { 
+            ?estudiante ex:recomendacionGenerada ?textoRec .
+            ?estudiante ex:motivoGenerado "Coincidencia: Prefieres modalidad Virtual y la materia es Virtual." .
+        }
+        WHERE {
+            ?estudiante ex:prefiereModalidad ex:MOD_Virtual .
+            ?materia ex:tieneModalidad ex:MOD_Virtual .
+            ?materia rdfs:label ?nombreMateria .
+            
+            # Verificar que puede cursarla (no aprobada y correlativas ok)
+            FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?materia }
+            FILTER NOT EXISTS {
+                ?correlativa ex:esCorrelativaDe ?materia .
+                FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?correlativa }
+            }
+            
+            BIND(CONCAT("Priorizar materia virtual: ", STR(?nombreMateria)) AS ?textoRec)
+        }
+        """,
+        
+        # R5: Preferencia Presencial
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        CONSTRUCT { 
+            ?estudiante ex:recomendacionGenerada ?textoRec .
+            ?estudiante ex:motivoGenerado "Coincidencia: Prefieres modalidad Presencial y la materia es Presencial." .
+        }
+        WHERE {
+            ?estudiante ex:prefiereModalidad ex:MOD_Presencial .
+            ?materia ex:tieneModalidad ex:MOD_Presencial .
+            ?materia rdfs:label ?nombreMateria .
+            
+            FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?materia }
+            FILTER NOT EXISTS {
+                ?correlativa ex:esCorrelativaDe ?materia .
+                FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?correlativa }
+            }
+            
+            BIND(CONCAT("Priorizar materia presencial: ", STR(?nombreMateria)) AS ?textoRec)
+        }
+        """,
+        
+        # R6: Trabaja y vive lejos
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        CONSTRUCT { 
+            ?estudiante ex:recomendacionGenerada ?textoRec .
+            ?estudiante ex:motivoGenerado "Estrategia de optimización: Trabajas y vives lejos, conviene virtual." .
+        }
+        WHERE {
+            ?estudiante ex:trabaja true .
+            ?estudiante ex:distanciaFacultad "lejos" .
+            ?materia ex:tieneModalidad ex:MOD_Virtual .
+            ?materia rdfs:label ?nombreMateria .
+            
+            FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?materia }
+            FILTER NOT EXISTS {
+                ?correlativa ex:esCorrelativaDe ?materia .
+                FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?correlativa }
+            }
+            
+            BIND(CONCAT("Recomendada por logística (Virtual): ", STR(?nombreMateria)) AS ?textoRec)
+        }
+        """,
+        
+        # R7: Sobrecarga
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        CONSTRUCT { 
+            ?estudiante ex:recomendacionGenerada "Limitar inscripción: Máx 2 materias." .
+            ?estudiante ex:motivoGenerado "Riesgo detectado: Tiendes a sobrecargar materias y tienes menos de 20hs disponibles." .
+        }
+        WHERE {
+            ?estudiante ex:cometeErrorFrecuente ex:ERR_SobrecargaMaterias .
+            ?estudiante ex:horasDisponiblesSemana ?horas .
+            FILTER(?horas < 20)
+        }
+        """,
+
+        # R9: Materias pendientes de años anteriores (Avanzado)
+        """
+        PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        CONSTRUCT { 
+            ?estudiante ex:recomendacionGenerada ?textoRec .
+            ?estudiante ex:motivoGenerado ?textoMotivo .
+        }
+        WHERE {
+            ?estudiante ex:nivelAvance "avanzado" .
+            ?materia ex:anio ?anio .
+            ?materia rdfs:label ?nombreMateria .
+            
+            FILTER(?anio <= 3)
+            
+            FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?materia }
+            FILTER NOT EXISTS {
+                ?correlativa ex:esCorrelativaDe ?materia .
+                FILTER NOT EXISTS { ?estudiante ex:materiaAprobada ?correlativa }
+            }
+            
+            BIND(CONCAT("URGENTE - Materia pendiente de año ", STR(?anio), ": ", STR(?nombreMateria)) AS ?textoRec)
+            BIND(CONCAT("Eres avanzado pero debes esta materia de año ", STR(?anio), ". Bloquea titulación.") AS ?textoMotivo)
+        }
+        """
     ]
+
     
     inferencias = []
     for r in reglas:
@@ -631,48 +767,121 @@ def obtener_inferencias_json(id_estudiante):
     return inferencias
 
 def obtener_materias_disponibles_json(id_estudiante):
-    """Devuelve materias que puede cursar ya"""
-    # (Usa la lógica de tu función obtener_materias_disponibles_para_cursar pero devuelve dict)
-    # Asumo que tienes la función original, solo cambiamos el return:
+    """Obtiene las materias que puede cursar AHORA (correlativas cumplidas)"""
     
-    # ... Logica de query ...
-    # Supongamos que llamas a tu funcion original y obtienes una lista de tuplas
-    # lista_tuplas = obtener_materias_disponibles_para_cursar(id_estudiante) 
+    # 1. Obtener materias ya aprobadas (en formato ID)
+    query_aprobadas = f"""
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+    SELECT ?materia
+    WHERE {{
+        ex:{id_estudiante} ex:materiaAprobada ?materia .
+    }}
+    """
+    aprobadas_result = list(g.query(query_aprobadas))
+    aprobadas_ids = {str(row[0]).split("#")[-1] for row in aprobadas_result}
     
-    # AQUI SIMULO LA LLAMADA (Debes integrar tu query original aqui)
-    query = f"""
+    # Formatear la lista de URIs para el FILTER IN de SPARQL
+    aprobadas_uris = ", ".join([f"ex:{m}" for m in aprobadas_ids]) if aprobadas_ids else ""
+
+    # 2. CALCULAR SUMA DE HORAS DE OPTATIVAS APROBADAS (¡CAMBIO CLAVE!)
+    
+    query_horas = f"""
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    SELECT (SUM(xsd:integer(?horas)) AS ?totalHoras)
+    WHERE {{
+        ex:{id_estudiante} ex:materiaAprobada ?materia .
+        ?materia rdf:type ex:Optativa .
+        ?materia ex:cargaHoraria ?horas .
+    }}
+    """
+    
+    horas_result = list(g.query(query_horas))
+    # Extraer el valor y asegurar que sea un entero (0 si es None/vacío)
+    optativas_aprobadas_horas = int(horas_result[0][0]) if horas_result and horas_result[0][0] is not None else 0
+    print(optativas_aprobadas_horas)
+    
+    # 3. Definir la consulta principal (Query Unificada con el nuevo filtro)
+    
+    # Se utiliza una consulta única que maneja el caso de aprobadas_uris vacío
+    
+    query_final = f"""
     PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    
     SELECT DISTINCT ?materia ?nombre ?modalidad ?anio
     WHERE {{
         {{ ?materia a ex:Materia }} UNION {{ ?materia a ex:MateriaBase }}
-        ?materia rdfs:label ?nombre ; ex:anio ?anio .
-        OPTIONAL {{ ?materia ex:tieneModalidad ?mObj . ?mObj rdfs:label ?modalidad }}
-        FILTER NOT EXISTS {{ ex:{id_estudiante} ex:materiaAprobada ?materia }}
-        FILTER NOT EXISTS {{ 
-            ?correlativa ex:esCorrelativaDe ?materia . 
-            FILTER NOT EXISTS {{ ex:{id_estudiante} ex:materiaAprobada ?correlativa }}
+        ?materia rdfs:label ?nombre ;
+                ex:anio ?anio .
+        OPTIONAL {{ 
+            ?materia ex:tieneModalidad ?mod_obj .
+            ?mod_obj rdfs:label ?modalidad 
         }}
-    }} ORDER BY ?anio
+        
+        # FILTRO 1: Materias no aprobadas (Si aprobadas_uris está vacío, el filtro es inofensivo)
+        { "FILTER(?materia NOT IN (" + aprobadas_uris + "))" if aprobadas_uris else "" }
+        
+        # FILTRO 2: Correlativas simples cumplidas
+        FILTER NOT EXISTS {{
+            ?correlativa ex:esCorrelativaDe ?materia .
+            { "FILTER(?correlativa NOT IN (" + aprobadas_uris + "))" if aprobadas_uris else "" }
+        }}
+        
+        # FILTRO 3: Requisito de Carga Horaria de Optativas (HORAS)
+        OPTIONAL {{ ?materia ex:requiereCargaHorariaOptativas ?min_horas_req }}
+        
+        # Inyectar el total de horas aprobado (calculado en Python)
+        BIND({optativas_aprobadas_horas} AS ?aprobadas_horas_py)
+
+        # Aplicar el filtro: Si existe el requisito (?min_horas_req), la suma debe ser >=
+        FILTER(
+            !BOUND(?min_horas_req) || 
+            (xsd:integer(?aprobadas_horas_py) >= xsd:integer(?min_horas_req))
+        )
+    }}
+    ORDER BY ?anio ?nombre
     """
-    
+   
+    # 4. Ejecutar la consulta elegida y formatear el resultado
     materias = []
-    for row in g.query(query):
+    for row in g.query(query_final):
         materias.append({
             "codigo": str(row[0]).split("#")[-1],
             "nombre": str(row[1]),
             "modalidad": str(row[2]) if row[2] else "N/A",
             "anio": int(row[3])
         })
+    print(materias)
     return materias
 
-def obtener_todas_materias():
-    """Para llenar el checkbox del frontend"""
-    q = """PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
-           PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-           SELECT ?id ?lbl WHERE { ?s a ex:Materia ; rdfs:label ?lbl . BIND(STRAFTER(STR(?s), "#") AS ?id) } ORDER BY ?lbl"""
-    return [{"codigo": str(r[0]), "nombre": str(r[1])} for r in g.query(q)]
 
+def obtener_todas_materias():
+    """Para llenar el checkbox del frontend, incluyendo optativas."""
+    q = """
+    PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    
+    # Usamos DISTINCT para asegurar que cada ID y Label aparezca solo una vez.
+    SELECT DISTINCT ?id ?lbl ?anio 
+    WHERE {
+        # Busca cualquier recurso que sea de la clase Materia o una subclase de Materia.
+        ?s rdfs:subClassOf* ex:Materia . # <- Esto ya incluye MateriaBase y Optativa
+        ?materia a ?s .
+        
+        # Obtenemos la etiqueta y el ID de la materia
+        ?materia rdfs:label ?lbl .
+        BIND(STRAFTER(STR(?materia), "#") AS ?id)
+    }
+    ORDER BY ?anio
+    """
+    # Nota: He cambiado el ORDER BY ?anio por ORDER BY ?lbl porque el campo ?anio no está en el SELECT.
+    # Si quieres ordenar por año, debes incluir ?anio en el SELECT.
+    
+    return [{"codigo": str(r[0]), "nombre": str(r[1])} for r in g.query(q)]
 def crear_estudiante(id_est, nivel, trabaja, holgura, distancia, horas_sem, 
                     errores=None, estrategias=None, modalidad_pref=None, 
                     tiempo_est=None, materias_aprobadas=None):
@@ -1172,77 +1381,4 @@ def aplicar_reglas_recomendacion(id_estudiante):
     else:
         print(f"Total de inferencias lógicas: {count_inferencias}")
 
-# ================================================================
-# 10) EJEMPLOS DE USO
-# ================================================================
 
-print("\n" + "="*70)
-print("CREANDO PERFILES DE ESTUDIANTES")
-print("="*70)
-# Estudiante 1: Ingresante sin materias aprobadas
-crear_estudiante(
-"EST001",
-"ingresante",
-trabaja=True,
-holgura=False,
-distancia="lejos",
-horas_sem=15,
-errores=["ERR_Procrastinacion", "ERR_EstudioUltimoDia"],
-estrategias=["EST_MicroEstudios"],
-modalidad_pref="MOD_Virtual",
-tiempo_est="TIEMPO_Bajo",
-materias_aprobadas=[]
-)
-# Estudiante 2: Intermedio con algunas materias
-crear_estudiante(
-"EST002",
-"intermedio",
-trabaja=False,
-holgura=True,
-distancia="cerca",
-horas_sem=30,
-errores=["ERR_NoCronogramas"],
-estrategias=["EST_RutinaSemanal", "EST_EstudioAnticipado"],
-modalidad_pref="MOD_Presencial",
-tiempo_est="TIEMPO_Alto",
-materias_aprobadas=["MAT_1", "MAT_2", "MAT_3", "MAT_4", "MAT_5", "MAT_8"]
-)
-# Estudiante 3: Avanzado con muchas materias
-crear_estudiante(
-"EST003",
-"avanzado",
-trabaja=True,
-holgura=False,
-distancia="lejos",
-horas_sem=12,
-errores=["ERR_SobrecargaMaterias"],
-estrategias=["EST_GrabarClases"],
-modalidad_pref="MOD_Virtual",
-tiempo_est="TIEMPO_Bajo",
-materias_aprobadas=["MAT_1", "MAT_2", "MAT_3", "MAT_4", "MAT_5", "MAT_6",
-"MAT_7", "MAT_8", "MAT_9", "MAT_10", "MAT_11", "MAT_12"]
-)
-# MOSTRAR RESULTADOS
-print("\n" + "="*70)
-print("ANÁLISIS ESTUDIANTE 1 (INGRESANTE)")
-print("="*70)
-mostrar_recomendaciones("EST001")
-aplicar_reglas_recomendacion("EST001")  # NUEVO
-# mostrar_materias_restantes("EST001")
-mostrar_materias_disponibles_para_cursar("EST001")
-print("\n" + "="*70)
-print("ANÁLISIS ESTUDIANTE 2 (INTERMEDIO)")
-print("="*70)
-mostrar_recomendaciones("EST002")
-aplicar_reglas_recomendacion("EST002")  # NUEVO
-# mostrar_materias_restantes("EST002")
-mostrar_materias_disponibles_para_cursar("EST002")
-print("\n" + "="*70)
-print("ANÁLISIS ESTUDIANTE 3 (AVANZADO)")
-print("="*70)
-mostrar_recomendaciones("EST003")
-aplicar_reglas_recomendacion("EST003")  # NUEVO
-# mostrar_materias_restantes("EST003")
-mostrar_materias_disponibles_para_cursar("EST003")
-print("\n[OK] Sistema de recomendación académica completado")
-print(f"Total de tripletas en el grafo: {len(g)}")
