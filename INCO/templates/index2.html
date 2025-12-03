@@ -1,401 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Interfaz HTML con Python</title>
-    <link rel="stylesheet" href="/static/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asesor Virtual Universitario</title>
+  <link rel="stylesheet" href="../static/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
+
 <body>
-    <h1>Formulario</h1>
-    <form method="POST">
-        <input type="text" name="nombre" placeholder="Escribe tu nombre">
-        <button type="submit">Enviar</button>
-    </form>
-
-    {% if resultado %}
-        <h2>{{ resultado }}</h2>
-    {% endif %}
-</body>
-</html>
-
-<div class="formbold-main-wrapper">
-  <!-- Author: FormBold Team -->
-  <!-- Learn More: https://formbold.com -->
-  <div class="formbold-form-wrapper">
-    <img src="your-image-url-here.jpg">
-    <form action="https://formbold.com/s/FORM_ID" method="POST">
-      <div class="formbold-input-flex">
-        <div>
-          <label for="firstname" class="formbold-form-label">
-            First name
-          </label>
-          <input
-            type="text"
-            name="firstname"
-            id="firstname"
-            placeholder="Jane"
-            class="formbold-form-input"
-          />
-        </div>
-        <div>
-          <label for="lastname" class="formbold-form-label"> Last name </label>
-          <input
-            type="text"
-            name="lastname"
-            id="lastname"
-            placeholder="Cooper"
-            class="formbold-form-input"
-          />
-        </div>
+  <div class="login-container" style="max-width: 1200px">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-icon">⚡</div>
+        <h2>Asesor Virtual Universitario</h2>
+        <p>Completa el formulario para obtener recomendaciones personalizadas</p>
       </div>
-
-      <div class="formbold-mb-5">
-        <label for="qusOne" class="formbold-form-label">
-          All HTML code must be put which symbols?
-        </label>
-
-        <div class="formbold-radio-flex">
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusOne"
-                id="qusOne"
-              />
-              Option one
-              <span class="formbold-radio-checkmark"></span>
-            </label>
+      <form method="POST" class="login-form" id="loginForm" novalidate> <!-- Información Personal -->
+        <div class="section-title">Información Personal</div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="input-wrapper"> <input type="text" id="nombre" name="nombre" required> <label
+                for="nombre">Nombre Completo</label> <span class="input-line"></span> </div> <span class="error-message"
+              id="nombreError"></span>
           </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusOne"
-                id="qusOne"
-              />
-              Option Two
-              <span class="formbold-radio-checkmark"></span>
-            </label>
+          <div class="form-group">
+            <div class="input-wrapper"> <input type="number" id="edad" name="edad" required min="16" max="100"> <label
+                for="edad">Edad</label> <span class="input-line"></span> </div> <span class="error-message"
+              id="edadError"></span>
           </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusOne"
-                id="qusOne"
-              />
-              Option Three
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusOne"
-                id="qusOne"
-              />
-              None of them
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
+        </div> <!-- Información Académica -->
+        <div class="section-title">Situación del Estudiante</div>
+        <div class="form-group"> <label class="select-label">Nivel</label>
+          <div class="select-wrapper"> <select id="nivel" name="nivel" required>
+              <option value="">Selecciona una opción</option>
+              <option value="">Ingresante</option>
+              <option value="secundaria">Intermedio</option>
+              <option value="universitario">Avanzado</option>
+            </select> <span class="select-arrow"></span> </div> <span class="error-message" id="nivelError"></span>
         </div>
-      </div>
-
-      <div class="formbold-mb-5">
-        <label for="qusTwo" class="formbold-form-label">
-          To display any image on web which tag we have to use?
-        </label>
-
-        <div class="formbold-radio-flex">
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusTwo"
-                id="qusTwo"
-              />
-              Option one
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusTwo"
-                id="qusTwo"
-              />
-              Option Two
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusTwo"
-                id="qusTwo"
-              />
-              Option Three
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusTwo"
-                id="qusTwo"
-              />
-              None of them
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
+        <div class="form-group"> <label class="radio-group-label">¿Trabaja?</label>
+          <div class="radio-group"> <label class="radio-label"> <input type="radio" name="trabaja" value="manana"
+                required> <span class="custom-radio"></span> <span class="radio-text">Si</span> </label> <label
+              class="radio-label"> <input type="radio" name="trabaja" value="tarde" required> <span
+                class="custom-radio"></span> <span class="radio-text">No</span> </label> </div> <span
+            class="error-message" id="horarioError"></span>
         </div>
-      </div>
-
-      <div>
-        <label for="qusThree" class="formbold-form-label">
-          What is the full definition of HTML?
-        </label>
-
-        <div class="formbold-radio-flex">
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusThree"
-                id="qusThree"
-              />
-              Option one
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusThree"
-                id="qusThree"
-              />
-              Option Two
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusThree"
-                id="qusThree"
-              />
-              Option Three
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
-
-          <div class="formbold-radio-group">
-            <label class="formbold-radio-label">
-              <input
-                class="formbold-input-radio"
-                type="radio"
-                name="qusThree"
-                id="qusThree"
-              />
-              None of them
-              <span class="formbold-radio-checkmark"></span>
-            </label>
-          </div>
+        <div class="form-group"> <label class="radio-group-label">¿Dispone de tiempo de holgura?</label>
+          <div class="radio-group"> <label class="radio-label"> <input type="radio" name="horario" value="manana"
+                required> <span class="custom-radio"></span> <span class="radio-text">Si</span> </label> <label
+              class="radio-label"> <input type="radio" name="horario" value="tarde" required> <span
+                class="custom-radio"></span> <span class="radio-text">No</span> </label> </div> <span
+            class="error-message" id="horarioError"></span>
         </div>
+        <div class="form-group"> <label class="radio-group-label">¿Reside lejos de la facultad (fuera de
+            capital)?</label>
+          <div class="radio-group"> <label class="radio-label"> <input type="radio" name="distancia" value="manana"
+                required> <span class="custom-radio"></span> <span class="radio-text">Si</span> </label> <label
+              class="radio-label"> <input type="radio" name="distancia" value="tarde" required> <span
+                class="custom-radio"></span> <span class="radio-text">No</span> </label> </div> <span
+            class="error-message" id="horarioError"></span>
+        </div> <!-- Rango de Presupuesto -->
+        <div class="form-group"> <label class="range-label"> Horas disponibles en la semana: <span
+              id="presupuestoValue">10 hs</span> </label> <input type="range" id="presupuesto" name="presupuesto"
+            min="1" max="50" value="10" step="1" class="range-input">
+          <div class="range-labels"> <span>1 hs</span> <span>50 hs</span> </div>
+        </div>
+        <!-- <div class="form-group"> <label class="select-label">Modalidad de cursado que prefiere</label> <div class="select-wrapper"> <select id="area" name="area" required> <option value="">Selecciona un área</option> <option value="ciencias">Presencial</option> <option value="ingenieria">Virtual</option> <option value="humanidades">Híbrido</option> </select> <span class="select-arrow"></span> </div> <span class="error-message" id="areaError"></span> </div> -->
+        <!-- Preferencias -->
+        <div class="section-title">Información de Estudio</div>
+        <div class="form-group"> <label class="checkbox-group-label">Errores que comete generalmente</label>
+          <div class="checkbox-group"> <label class="checkbox-label"> <input type="checkbox" name="intereses"
+                id="terminos" value="programacion"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Procrastinacion antes de parciales</span> </label> <label class="checkbox-label">
+              <input type="checkbox" name="intereses" value="diseno"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">No revisar cronogramas</span> </label> <label class="checkbox-label"> <input
+                type="checkbox" name="intereses" value="matematicas"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Inscribirse en demasiadas materias</span> </label> <label class="checkbox-label">
+              <input type="checkbox" name="intereses" value="idiomas"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Estudiar el ultimo dia</span> </label> <label class="checkbox-label"> <input
+                type="checkbox" name="intereses" value="investigacion"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Ignorar correlatividades</span> </label> </div>
+        </div>
+        <div class="form-group"> <label class="checkbox-group-label">Estrategias de Estudio</label>
+          <div class="checkbox-group"> <label class="checkbox-label"> <input type="checkbox" name="estrategias"
+                value="programacion"> <span class="custom-checkbox"></span> <span class="checkbox-text">Micro-estudios
+                de alrededor de 30 minutos</span> </label> <label class="checkbox-label"> <input type="checkbox"
+                name="estrategias" value="diseno"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Rutina semanal estricta</span> </label> <label class="checkbox-label"> <input
+                type="checkbox" name="estrategias" value="matematicas"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Estudiar con anticipacion</span> </label> <label class="checkbox-label"> <input
+                type="checkbox" name="estrategias" value="idiomas"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">Grabar clases para revisar</span> </label> </div>
+        </div>
+        <div class="form-group"> <label class="radio-group-label">Modalidad de Dictado de clases preferida</label>
+          <div class="radio-group"> <label class="radio-label"> <input type="radio" name="modalidad" value="presencial"
+                required> <span class="custom-radio"></span> <span class="radio-text">Presencial</span> </label> <label
+              class="radio-label"> <input type="radio" name="modalidad" value="virtual" required> <span
+                class="custom-radio"></span> <span class="radio-text">Virtual</span> </label> <label
+              class="radio-label"> <input type="radio" name="modalidad" value="hibrida" required> <span
+                class="custom-radio"></span> <span class="radio-text">Híbrida</span> </label> </div>
+          <!-- <span class="error-message" id="modalidadError"></span> -->
+        </div>
+        <div class="form-group"> <label class="radio-group-label">Tiempo de Estudio</label>
+          <div class="radio-group"> <label class="radio-label"> <input type="radio" name="tiempo" value="presencial"
+                required> <span class="custom-radio"></span> <span class="radio-text">Menos de 10 horas semanales</span>
+            </label> <label class="radio-label"> <input type="radio" name="tiempo" value="virtual" required> <span
+                class="custom-radio"></span> <span class="radio-text">Entre 10 y 20 horas semanales</span> </label>
+            <label class="radio-label"> <input type="radio" name="tiempo" value="hibrida" required> <span
+                class="custom-radio"></span> <span class="radio-text">Más de 20 horas semanales</span> </label> </div>
+          <span class="error-message" id="modalidadError"></span>
+        </div> <!-- Intereses -->
+        <div class="section-title">MATERIAS</div>
+        <div class="form-group"> <label class="checkbox-group-label">Selecciona todas las aprobadas</label>
+          <div class="checkbox-group"> {% for m in materias %} <label class="checkbox-label"> <input type="checkbox"
+                name="materias_aprobadas" value="{{ m.codigo }}"> <span class="custom-checkbox"></span> <span
+                class="checkbox-text">{{ m.nombre }}</span> </label> {% endfor %} </div>
+        </div> <button type="submit" class="login-btn btn"> <span class="btn-text">OBTENER RECOMENDACIONES</span> <span
+            class="btn-loader"></span> <span class="btn-glow"></span> </button>
+      </form> {% if resultado %} <h2>{{ resultado }}</h2> {% endif %} <div class="success-message" id="successMessage">
+        <div class="success-icon">✓</div>
+        <h3>¡Formulario Enviado!</h3>
+        <p>Procesando tus recomendaciones personalizadas...</p>
       </div>
-
-      <button class="formbold-btn">Submit</button>
-    </form>
-  </div>
-</div>
-
-HTML
-Tailwind
-Copy
-<div class="main-center">
-    <!-- Author: FormBold Team -->
-    <!-- Learn More: https://formbold.com -->
-    <div class="form-container">
-        <img
-            src="https://ucarecdn.com/412d5bde-bec7-49c8-94c9-f6df6434ed12/address.png"
-            alt="Address Form Image"
-            class="form-img"
-        />
-        <form
-            action="https://formbold.com/s/FORM_ID"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-            <div style="margin-bottom: 2rem">
-                <h2 class="form-title">Address Form</h2>
-                <p class="form-desc">
-                    Please provide your address details below. Fields marked
-                    with * are required.
-                </p>
-            </div>
-
-            <label for="fullname" class="form-label">Full Name*</label>
-            <input
-                type="text"
-                name="fullname"
-                id="fullname"
-                class="form-input"
-                placeholder="Enter your full name"
-                required
-            />
-
-            <label for="email" class="form-label">Email Address*</label>
-            <input
-                type="email"
-                name="email"
-                id="email"
-                class="form-input"
-                placeholder="Enter your email"
-                required
-            />
-
-            <label for="phone" class="form-label"
-                >Phone Number (Optional)</label
-            >
-            <input
-                type="tel"
-                name="phone"
-                id="phone"
-                class="form-input"
-                placeholder="Enter your phone number"
-            />
-
-            <label for="address-line-1" class="form-label"
-                >Street Address (Line 1)*</label
-            >
-            <input
-                type="text"
-                name="address-line-1"
-                id="address-line-1"
-                class="form-input"
-                placeholder="House No., Road Name, etc."
-                required
-            />
-
-            <label for="address-line-2" class="form-label"
-                >Street Address (Line 2) (Optional)</label
-            >
-            <input
-                type="text"
-                name="address-line-2"
-                id="address-line-2"
-                class="form-input"
-                placeholder="Apartment, Suite, Floor, etc."
-            />
-
-            <label for="city" class="form-label">City / Town*</label>
-            <input
-                type="text"
-                name="city"
-                id="city"
-                class="form-input"
-                placeholder="City or Town"
-                required
-            />
-
-            <label for="state" class="form-label"
-                >State / Province / Region*</label
-            >
-            <input
-                type="text"
-                name="state"
-                id="state"
-                class="form-input"
-                placeholder="State, Province, or Region"
-                required
-            />
-
-            <label for="postal-code" class="form-label"
-                >Postal / ZIP Code*</label
-            >
-            <input
-                type="text"
-                name="postal-code"
-                id="postal-code"
-                class="form-input"
-                placeholder="Postal or ZIP Code"
-                required
-            />
-
-            <label for="country" class="form-label">Country*</label>
-            <select name="country" id="country" class="form-select" required>
-                <option value="India">India</option>
-                <option value="USA">United States</option>
-                <option value="UK">United Kingdom</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-            </select>
-
-            <label for="purpose" class="form-label"
-                >Purpose of Form (Optional)</label
-            >
-            <select name="purpose" id="purpose" class="form-select">
-                <option value="new-address">New Address</option>
-                <option value="address-update">Address Update</option>
-                <option value="delivery-address">Delivery Address</option>
-                <option value="billing-address">Billing Address</option>
-                <option value="permanent-address">Permanent Address</option>
-            </select>
-
-            <label for="proof-of-address" class="form-label"
-                >Proof of Address (Optional)</label
-            >
-            <input
-                type="file"
-                name="proof-of-address"
-                id="proof-of-address"
-                accept=".pdf,.jpg,.jpeg,.png"
-                class="form-file"
-            />
-
-            <div class="form-checkbox-row">
-                <input
-                    type="checkbox"
-                    id="declaration"
-                    class="form-checkbox"
-                    required
-                />
-                <label
-                    for="declaration"
-                    style="margin: 0; font-weight: 500"
-                    class="form-label"
-                >
-                    I confirm this address is accurate and updated to the best
-                    of my knowledge.
-                </label>
-            </div>
-
-            <button class="form-btn">Submit Address</button>
-        </form>
     </div>
-</div>
+    <div class="background-effects">
+      <div class="glow-orb glow-orb-1"></div>
+      <div class="glow-orb glow-orb-2"></div>
+      <div class="glow-orb glow-orb-3"></div>
+    </div>
+  </div>
+</body>
 
+</html>
