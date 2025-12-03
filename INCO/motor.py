@@ -63,7 +63,6 @@ for p, (dom, ran) in object_props.items():
 data_props = {
     "trabaja": ("Estudiante", XSD.boolean),
     "tieneHolgura": ("Estudiante", XSD.boolean),
-    "horasDisponiblesSemana": ("Estudiante", XSD.integer),
     "distanciaFacultad": ("Estudiante", XSD.string),
     "nivelAvance": ("Estudiante", XSD.string),
     "cargaHoraria": ("Materia", XSD.positiveInteger),
@@ -274,7 +273,7 @@ recomendaciones_ing = {
 
 recomendaciones_int = {
     "REC_M1": {
-        "texto": "Estudiar con anticipacion y revisar cronogramas de examenes y actividades",
+        "texto": "Revisar con antelación cronogramas de examenes y actividades",
         "trabaja": None,
         "distancia": None,
         "holgura": None,
@@ -326,9 +325,9 @@ recomendaciones_avan = {
         "prioridad": 1
     },
     "REC_A2": {
-        "texto": "Enfocar materias de años anteriores para cumplir requisitos de PPS y TF",
-        "trabaja": None,
-        "distancia": None,
+        "texto": "Aprovechar el viaje para leer el material correspondiente a las clases presenciales",
+        "trabaja": "no",
+        "distancia": "lejos",
         "holgura": None,
         "prioridad": 1
     },
@@ -513,7 +512,6 @@ def crear_estudiante_y_razonar(datos):
     g.add((EX[id_est], EX.trabaja, Literal(datos['trabaja'] == "si", datatype=XSD.boolean)))
     g.add((EX[id_est], EX.tieneHolgura, Literal(datos['holgura'] == "si", datatype=XSD.boolean)))
     g.add((EX[id_est], EX.distanciaFacultad, Literal(datos['distancia']))) # "cerca" o "lejos"
-    g.add((EX[id_est], EX.horasDisponiblesSemana, Literal(int(datos['horas']), datatype=XSD.integer)))
     
     # Listas
     for error in datos['errores']:
@@ -576,8 +574,8 @@ def obtener_recomendaciones_json(id_estudiante):
     for row in g.query(query):
         rec, texto, prio, rt, rh, rd = row
         motivos = []
-        if rt: motivos.append(f"trabajas ({rt})")
-        if rh: motivos.append(f"tienes holgura ({rh})")
+        if rt: motivos.append(f"{rt} trabajas")
+        if rh: motivos.append(f"{rh} tienes holgura")
         if rd: motivos.append(f"distancia es {rd}")
         
         explicacion = "Sugerencia general para tu nivel."
@@ -666,7 +664,7 @@ def obtener_inferencias_json(id_estudiante):
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         CONSTRUCT { 
             ?estudiante ex:recomendacionGenerada ?textoRec .
-            ?estudiante ex:motivoGenerado "Coincidencia: Prefieres modalidad Presencial y la materia es Presencial." .
+            ?estudiante ex:motivoGenerado "Prefieres modalidad Presencial y la materia es Presencial." .
         }
         WHERE {
             ?estudiante ex:prefiereModalidad ex:MOD_Presencial .
@@ -716,8 +714,6 @@ def obtener_inferencias_json(id_estudiante):
         }
         WHERE {
             ?estudiante ex:cometeErrorFrecuente ex:ERR_SobrecargaMaterias .
-            ?estudiante ex:horasDisponiblesSemana ?horas .
-            FILTER(?horas < 20)
         }
         """,
 
@@ -783,7 +779,7 @@ def obtener_materias_disponibles_json(id_estudiante):
     # Formatear la lista de URIs para el FILTER IN de SPARQL
     aprobadas_uris = ", ".join([f"ex:{m}" for m in aprobadas_ids]) if aprobadas_ids else ""
 
-    # 2. CALCULAR SUMA DE HORAS DE OPTATIVAS APROBADAS (¡CAMBIO CLAVE!)
+    # 2. CALCULAR SUMA DE HORAS DE OPTATIVAS APROBADAS
     
     query_horas = f"""
     PREFIX ex: <http://miEX.sidad7.edu/ontologias#>
@@ -878,8 +874,6 @@ def obtener_todas_materias():
     }
     ORDER BY ?anio
     """
-    # Nota: He cambiado el ORDER BY ?anio por ORDER BY ?lbl porque el campo ?anio no está en el SELECT.
-    # Si quieres ordenar por año, debes incluir ?anio en el SELECT.
     
     return [{"codigo": str(r[0]), "nombre": str(r[1])} for r in g.query(q)]
 def crear_estudiante(id_est, nivel, trabaja, holgura, distancia, horas_sem, 
@@ -896,7 +890,6 @@ def crear_estudiante(id_est, nivel, trabaja, holgura, distancia, horas_sem,
     g.add((EX[id_est], EX.trabaja, Literal(trabaja, datatype=XSD.boolean)))
     g.add((EX[id_est], EX.tieneHolgura, Literal(holgura, datatype=XSD.boolean)))
     g.add((EX[id_est], EX.distanciaFacultad, Literal(distancia)))
-    g.add((EX[id_est], EX.horasDisponiblesSemana, Literal(horas_sem, datatype=XSD.integer)))
     
     if errores:
         for error in errores:
@@ -980,7 +973,7 @@ def obtener_recomendaciones(id_estudiante):
     resultados_raw = list(g.query(query))
     recomendaciones_explicadas = []
 
-    # 3. Procesamiento en Python para generar la explicación "human-readable"
+    # 3. Procesamiento para generar la explicación
     for row in resultados_raw:
         rec, texto, prioridad, req_trabajo, req_holgura, req_distancia = row
         
@@ -992,7 +985,7 @@ def obtener_recomendaciones(id_estudiante):
         if req_distancia:
             motivos.append(f"vives '{req_distancia}' de la facultad")
         
-        # Si no tiene requisitos específicos, es una recomendación general para el nivel
+        # recomendación general para el nivel
         explicacion = "Recomendación general para tu nivel de avance."
         if motivos:
             explicacion = "Se sugiere porque " + " y ".join(motivos) + "."
@@ -1311,8 +1304,7 @@ def aplicar_reglas_recomendacion(id_estudiante):
         }
         WHERE {
             ?estudiante ex:cometeErrorFrecuente ex:ERR_SobrecargaMaterias .
-            ?estudiante ex:horasDisponiblesSemana ?horas .
-            FILTER(?horas < 20)
+            
         }
         """,
 

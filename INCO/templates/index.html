@@ -215,20 +215,14 @@
                 </div>
 
                 <!-- HORAS SEMANALES -->
-                <div class="form-group">
-                    <label class="range-label">
-                        Horas disponibles en la semana:
-                        <span id="presupuestoValue">10 hs</span>
-                    </label>
-
-                    <input type="range" id="horas" name="horas" min="1" max="50" value="10" step="1"
-                        class="range-input">
-
-                    <div class="range-labels">
-                        <span>1 hs</span>
-                        <span>50 hs</span>
+                                <!-- HORAS SEMANALES -->
+                <!-- <div class="form-group">
+                    <label class="radio-group-label">Horas disponibles en la semana</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="horas" name="horas" required min="1" max="50" step="1">
+                        <label for="horas">Horas disponibles en la semana</label>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="form-group"> <label class="select-label">Modalidad de cursado que prefiere</label> <div class="select-wrapper"> <select id="area" name="area" required> <option value="">Selecciona un área</option> <option value="ciencias">Presencial</option> <option value="ingenieria">Virtual</option> <option value="humanidades">Híbrido</option> </select> <span class="select-arrow"></span> </div> <span class="error-message" id="areaError"></span> </div> -->
                 <!-- Preferencias -->
                 <div class="section-title">Información de Estudio</div>
@@ -367,9 +361,10 @@ function enviarFormulario() {
             html += `
             <div class="mat-item">
                 <strong>${mat.nombre}</strong><br>
-                <small>Año: ${mat.anio} | ${mat.modalidad}</small>
+                <small>Año: ${mat.anio === 0 ? 'Requisito' : mat.anio} | ${mat.modalidad}</small>
             </div>`;
         });
+
 
         html += `</div></div>`;
 
